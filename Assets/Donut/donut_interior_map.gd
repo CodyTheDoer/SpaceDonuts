@@ -1,6 +1,6 @@
-extends CanvasLayer
+extends Node2D
 
-@export var ring_world: Resource 
+@export var ring_world: Resource
 
 @onready var tilemap = %DonutTileMapLayer
 

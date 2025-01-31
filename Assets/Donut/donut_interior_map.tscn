@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwh3ydq45bsue"]
+
+[ext_resource type="Script" path="res://Assets/Donut/donut_interior_map.gd" id="1_tuycd"]
+[ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_40uvj"]
+[ext_resource type="TileSet" uid="uid://b0o58eyb2u6dh" path="res://Assets/DonutUI/donut_tile_map.tres" id="3_m7235"]
+[ext_resource type="PackedScene" uid="uid://cbchvi8c0dikm" path="res://Assets/Player/player.tscn" id="4_vynwq"]
+
+[node name="DonutInteriorMap" type="Node2D"]
+script = ExtResource("1_tuycd")
+ring_world = ExtResource("2_40uvj")
+
+[node name="DonutTileMapLayer" type="TileMapLayer" parent="."]
+unique_name_in_owner = true
+tile_set = ExtResource("3_m7235")
+
+[node name="Player" parent="DonutTileMapLayer" instance=ExtResource("4_vynwq")]
+position = Vector2(40, 43)

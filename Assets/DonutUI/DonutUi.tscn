@@ -1,80 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dvocp7ql0dy4g"]
+[gd_scene load_steps=5 format=3 uid="uid://dvocp7ql0dy4g"]
 
-[ext_resource type="Script" path="res://Assets/Donut/Donut.gd" id="1_6ajj8"]
+[ext_resource type="Script" path="res://Assets/DonutUI/DonutUI.gd" id="1_6ajj8"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_3n4wt"]
-[ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArray.png" id="2_s4otd"]
+[ext_resource type="PackedScene" uid="uid://bwh3ydq45bsue" path="res://Assets/Donut/donut_interior_map.tscn" id="3_1sr3o"]
 [ext_resource type="PackedScene" uid="uid://bgl448k3tm2r" path="res://Assets/Space/space.tscn" id="4_xxg0w"]
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13rvr"]
-resource_name = "<null>"
-texture = ExtResource("2_s4otd")
-texture_region_size = Vector2i(32, 32)
-0:0/0 = 0
-0:0/0/terrain_set = 0
-0:0/0/terrain = 0
-0:0/0/probability = 0.25
-0:0/0/terrains_peering_bit/right_side = 0
-0:0/0/terrains_peering_bit/bottom_right_corner = 0
-0:0/0/terrains_peering_bit/bottom_side = 0
-0:0/0/terrains_peering_bit/bottom_left_corner = 0
-0:0/0/terrains_peering_bit/left_side = 0
-0:0/0/terrains_peering_bit/top_left_corner = 0
-0:0/0/terrains_peering_bit/top_side = 0
-0:0/0/terrains_peering_bit/top_right_corner = 0
-1:0/0 = 0
-1:0/0/terrain_set = 0
-1:0/0/terrain = 0
-1:0/0/probability = 0.0
-1:0/0/terrains_peering_bit/right_side = 0
-1:0/0/terrains_peering_bit/bottom_right_corner = 0
-1:0/0/terrains_peering_bit/bottom_side = 0
-1:0/0/terrains_peering_bit/bottom_left_corner = 0
-1:0/0/terrains_peering_bit/left_side = 0
-1:0/0/terrains_peering_bit/top_left_corner = 0
-1:0/0/terrains_peering_bit/top_side = 0
-1:0/0/terrains_peering_bit/top_right_corner = 0
-2:0/0 = 0
-2:0/0/terrain_set = 0
-2:0/0/terrain = 0
-2:0/0/probability = 0.1
-2:0/0/terrains_peering_bit/right_side = 0
-2:0/0/terrains_peering_bit/bottom_right_corner = 0
-2:0/0/terrains_peering_bit/bottom_side = 0
-2:0/0/terrains_peering_bit/bottom_left_corner = 0
-2:0/0/terrains_peering_bit/left_side = 0
-2:0/0/terrains_peering_bit/top_left_corner = 0
-2:0/0/terrains_peering_bit/top_side = 0
-2:0/0/terrains_peering_bit/top_right_corner = 0
-3:0/0 = 0
-3:0/0/terrain_set = 0
-3:0/0/terrain = 0
-3:0/0/terrains_peering_bit/right_side = 0
-3:0/0/terrains_peering_bit/bottom_right_corner = 0
-3:0/0/terrains_peering_bit/bottom_side = 0
-3:0/0/terrains_peering_bit/bottom_left_corner = 0
-3:0/0/terrains_peering_bit/left_side = 0
-3:0/0/terrains_peering_bit/top_left_corner = 0
-3:0/0/terrains_peering_bit/top_side = 0
-3:0/0/terrains_peering_bit/top_right_corner = 0
-4:0/0 = 0
-4:0/0/terrain_set = 0
-4:0/0/terrain = 0
-4:0/0/probability = 0.25
-4:0/0/terrains_peering_bit/right_side = 0
-4:0/0/terrains_peering_bit/bottom_right_corner = 0
-4:0/0/terrains_peering_bit/bottom_side = 0
-4:0/0/terrains_peering_bit/bottom_left_corner = 0
-4:0/0/terrains_peering_bit/left_side = 0
-4:0/0/terrains_peering_bit/top_left_corner = 0
-4:0/0/terrains_peering_bit/top_side = 0
-4:0/0/terrains_peering_bit/top_right_corner = 0
-
-[sub_resource type="TileSet" id="TileSet_rpraq"]
-tile_size = Vector2i(32, 32)
-terrain_set_0/mode = 0
-terrain_set_0/terrain_0/name = "Donut"
-terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
-sources/1 = SubResource("TileSetAtlasSource_13rvr")
 
 [node name="DonutUI" type="CanvasLayer"]
 script = ExtResource("1_6ajj8")
@@ -103,9 +32,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DonutTileMapLayer" type="TileMapLayer" parent="HBoxContainer/MapInterface"]
-unique_name_in_owner = true
-tile_set = SubResource("TileSet_rpraq")
+[node name="SubViewportContainer" type="SubViewportContainer" parent="HBoxContainer/MapInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="HBoxContainer/MapInterface/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(300, 648)
+render_target_update_mode = 4
+
+[node name="DonutInteriorMap" parent="HBoxContainer/MapInterface/SubViewportContainer/SubViewport" instance=ExtResource("3_1sr3o")]
 
 [node name="Stats Interface" type="Control" parent="HBoxContainer"]
 custom_minimum_size = Vector2(275, 0)
