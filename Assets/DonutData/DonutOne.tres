@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://lem2hbcxc2oj"]
+
+[ext_resource type="Script" path="res://Assets/Donut/DonutRadial.gd" id="1_h3naq"]
+
+[resource]
+script = ExtResource("1_h3naq")
+RingInnerFaceCount = 40
+RingDepth = 10

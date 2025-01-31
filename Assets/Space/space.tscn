@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgl448k3tm2r"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_3t187"]
+inner_radius = 0.95
+
+[sub_resource type="Gradient" id="Gradient_dxx31"]
+offsets = PackedFloat32Array(0.749319, 0.942779)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_e2fyy"]
+noise_type = 5
+frequency = 0.8927
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0f1lk"]
+width = 1024
+height = 1024
+invert = true
+in_3d_space = true
+seamless = true
+seamless_blend_skirt = 0.0
+normalize = false
+color_ramp = SubResource("Gradient_dxx31")
+noise = SubResource("FastNoiseLite_e2fyy")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_leahr"]
+panorama = SubResource("NoiseTexture2D_0f1lk")
+
+[sub_resource type="Sky" id="Sky_gf0gs"]
+sky_material = SubResource("PanoramaSkyMaterial_leahr")
+
+[sub_resource type="Environment" id="Environment_0nt65"]
+background_mode = 2
+sky = SubResource("Sky_gf0gs")
+
+[node name="Space" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(12, 0, 0, 0, 80, 0, 0, 0, 12, 0, 0, 0)
+mesh = SubResource("TorusMesh_3t187")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.188724, -0.898794, -0.395667, 0.902585, -3.94533e-08, 0.430511, -0.386941, -0.438371, 0.811238, -10, 8, 16)
+environment = SubResource("Environment_0nt65")
+fov = 92.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.491694, 0, 0.870768, 0, 1, 0, -0.870768, 0, 0.491694, 37.7936, 17.6539, 33.8668)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 3.63
+light_indirect_energy = 5.018
+light_volumetric_fog_energy = 6.812
+light_size = 0.085
+omni_range = 23.838
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -22.7167, 0, 5.51057)
+light_energy = 3.63
+light_indirect_energy = 5.018
+light_volumetric_fog_energy = 6.812
+light_size = 0.085
+omni_range = 23.838
