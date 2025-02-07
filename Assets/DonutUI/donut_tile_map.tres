@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArray.png" id="1_3chyv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13rvr"]
-resource_name = "<null>"
+resource_name = "80"
 texture = ExtResource("1_3chyv")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0

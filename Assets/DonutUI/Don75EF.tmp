@@ -1,0 +1,152 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvocp7ql0dy4g"]
+
+[ext_resource type="Script" path="res://Assets/DonutUI/DonutUI.gd" id="1_6ajj8"]
+[ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_3n4wt"]
+[ext_resource type="PackedScene" uid="uid://bwh3ydq45bsue" path="res://Assets/Donut/donut_interior_map.tscn" id="3_1sr3o"]
+[ext_resource type="PackedScene" uid="uid://bgl448k3tm2r" path="res://Assets/Space/space.tscn" id="4_xxg0w"]
+
+[node name="DonutUI" type="CanvasLayer"]
+script = ExtResource("1_6ajj8")
+ring_world = ExtResource("2_3n4wt")
+
+[node name="Screen" type="HBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TopDownMap" type="VBoxContainer" parent="Screen"]
+layout_mode = 2
+
+[node name="YIndicator and Map" type="HBoxContainer" parent="Screen/TopDownMap"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PlayerMapHeightIndicator" type="VSlider" parent="Screen/TopDownMap/YIndicator and Map"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+value = 100.0
+scrollable = false
+
+[node name="MapInterface" type="Control" parent="Screen/TopDownMap/YIndicator and Map"]
+clip_contents = true
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="Screen/TopDownMap/YIndicator and Map/MapInterface"]
+modulate = Color(0.596426, 0.160963, 0.155038, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Screen/TopDownMap/YIndicator and Map/MapInterface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(600, 980)
+render_target_update_mode = 4
+
+[node name="DonutInteriorMap" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport" instance=ExtResource("3_1sr3o")]
+unique_name_in_owner = true
+
+[node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="Screen/TopDownMap"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="Screen/TopDownMap/SmallSpacer and XIndicator"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+
+[node name="PlayerMapWidthIndicator" type="HSlider" parent="Screen/TopDownMap/SmallSpacer and XIndicator"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Stats Interface" type="Control" parent="Screen"]
+clip_contents = true
+custom_minimum_size = Vector2(275, 0)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Screen/Stats Interface"]
+modulate = Color(0.7239, 0.390137, 0.0902381, 1)
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VSplitContainer" type="VSplitContainer" parent="Screen"]
+custom_minimum_size = Vector2(1000, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="3D" type="Control" parent="Screen/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Screen/VSplitContainer/3D"]
+z_index = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Screen/VSplitContainer/3D/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1000, 588)
+render_target_update_mode = 4
+
+[node name="Space" parent="Screen/VSplitContainer/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]
+unique_name_in_owner = true
+
+[node name="UI Subpanel" type="Control" parent="Screen/VSplitContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Screen/VSplitContainer/UI Subpanel"]
+modulate = Color(0.0799769, 0.373312, 0.481741, 1)
+z_index = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OrbitSlider" type="HSlider" parent="Screen/VSplitContainer/UI Subpanel"]
+unique_name_in_owner = true
+z_index = 2
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 16.0
+grow_horizontal = 2
+max_value = 360.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Screen"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control" type="Control" parent="Screen"]
+layout_mode = 2

@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce5y5ea5jw6w4"]
+
+[ext_resource type="Script" path="res://Assets/3DLocationIndicator/space_donut_3d_location_indicator.gd" id="1_y13e4"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_qashp"]
+inner_radius = 1.2
+outer_radius = 1.25
+
+[sub_resource type="TorusMesh" id="TorusMesh_mipr5"]
+inner_radius = 1.2
+outer_radius = 1.25
+
+[node name="LocationIndicator" type="Node3D" groups=["Camera3DOrbit"]]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+script = ExtResource("1_y13e4")
+
+[node name="Node3DRotation" type="Node3D" parent="." groups=["Camera3DOrbit"]]
+
+[node name="LocationLightInner" type="OmniLight3D" parent="Node3DRotation" groups=["PlayerLocationLightIndicator"]]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.303, 0, -1.21788e-08)
+light_energy = 16.0
+light_indirect_energy = 4.372
+light_volumetric_fog_energy = 6.453
+omni_range = 0.349464
+
+[node name="PlayerIndicatorRingInner" type="MeshInstance3D" parent="Node3DRotation"]
+transform = Transform3D(-3.25841e-08, -2.25, 8.74228e-09, 0, -9.83506e-08, -0.2, 0.2, -3.66572e-07, 1.4243e-15, -11.3014, 0, -9.87999e-07)
+mesh = SubResource("TorusMesh_qashp")
+
+[node name="LocationLightOuter" type="OmniLight3D" parent="Node3DRotation"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.2002, 0, -1.57502e-08)
+light_energy = 16.0
+light_indirect_energy = 4.372
+light_volumetric_fog_energy = 6.453
+omni_range = 0.349464
+
+[node name="PlayerIndicatorRingOuter" type="MeshInstance3D" parent="Node3DRotation"]
+transform = Transform3D(-3.25841e-08, -2.25, 8.74228e-09, 0, -9.83506e-08, -0.2, 0.2, -3.66572e-07, 1.4243e-15, -12.2022, 0, -1.06675e-06)
+mesh = SubResource("TorusMesh_mipr5")

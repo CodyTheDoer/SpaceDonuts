@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SpaceDonut3DLocationIndicator" load_steps=2 format=3 uid="uid://bfqo8fosnmwt5"]
+
+[ext_resource type="Script" path="res://Assets/3DLocationIndicator/space_donut_3d_location_indicator_res.gd" id="1_iar70"]
+
+[resource]
+script = ExtResource("1_iar70")
+target_location = Vector2(0, 0)
+light_Color = Color(0.260019, 0.479397, 1, 1)
+donut_x_count = 0.0
+donut_y_count = 0.0
+y_rotation_degrees = Vector3(0, 0, 0)
+x_shifted_y_position = 0.0

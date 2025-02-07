@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://dlqvcrl07vw47"]
+
+[ext_resource type="FontFile" uid="uid://cgr2j6yvcaq3f" path="res://Assets/Fonts/BeonMedium-7Z34.ttf" id="1_6tghi"]
+
+[resource]
+default_font = ExtResource("1_6tghi")
+default_font_size = 22

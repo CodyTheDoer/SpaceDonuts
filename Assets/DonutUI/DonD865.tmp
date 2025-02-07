@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dvocp7ql0dy4g"]
 
-[ext_resource type="Script" path="res://Assets/DonutUI/donut_ui.gd" id="1_6ajj8"]
+[ext_resource type="Script" path="res://Assets/DonutUI/DonutUI.gd" id="1_6ajj8"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_3n4wt"]
 [ext_resource type="Resource" uid="uid://bfqo8fosnmwt5" path="res://Assets/3DLocationIndicator/Player_Position_Indicator.tres" id="2_4yysp"]
 [ext_resource type="PackedScene" uid="uid://bwh3ydq45bsue" path="res://Assets/Donut/donut_interior_map.tscn" id="3_1sr3o"]
@@ -9,8 +9,8 @@
 
 [node name="DonutUI" type="CanvasLayer"]
 script = ExtResource("1_6ajj8")
-space_donut = ExtResource("2_3n4wt")
 player_indicator_res = ExtResource("2_4yysp")
+space_donut = ExtResource("2_3n4wt")
 
 [node name="Screen" type="HBoxContainer" parent="."]
 anchors_preset = 15
@@ -822,47 +822,32 @@ render_target_update_mode = 4
 
 [node name="Space" parent="Screen/OrbitDisplay/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]
 unique_name_in_owner = true
-space_donut = ExtResource("2_3n4wt")
-player_indicator_res = ExtResource("2_4yysp")
 
-[node name="Control" type="Control" parent="Screen/OrbitDisplay/3D"]
+[node name="LabelAvatarLocation" type="RichTextLabel" parent="Screen/OrbitDisplay/3D"]
+z_index = 1
+custom_minimum_size = Vector2(200, 40)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -201.0
+offset_top = -39.0
+offset_right = -1.0
+offset_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("5_ey4y7")
+text = "Avatar Location"
+
+[node name="FlexContainer" type="VBoxContainer" parent="Screen/OrbitDisplay/3D"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="TargetLabelAvatarLocationPointer" type="Control" parent="Screen/OrbitDisplay/3D/Control" groups=["UILabelOrbitCamAvatarLocation"]]
-unique_name_in_owner = true
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="LabelAvatarLocation" type="RichTextLabel" parent="Screen/OrbitDisplay/3D/Control" groups=["UILabelOrbitCamAvatarLocation"]]
-z_index = 1
-custom_minimum_size = Vector2(200, 40)
-layout_mode = 2
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -396.0
-offset_top = -165.0
-offset_right = -196.0
-offset_bottom = -125.0
-grow_horizontal = 0
-grow_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Avatar Location"
-
-[node name="LabelAvatarLocationLine" type="Line2D" parent="Screen/OrbitDisplay/3D/Control"]
-unique_name_in_owner = true
-visible = false
-z_index = 1
-position = Vector2(-2, 6)
-points = PackedVector2Array(709, 564, 661, 544)
-width = 0.75
 
 [node name="UI Subpanel" type="Control" parent="Screen/OrbitDisplay"]
 custom_minimum_size = Vector2(0, 400)
@@ -904,7 +889,7 @@ z_index = 2
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 3
-max_value = 360.0
+max_value = 120.0
 
 [node name="Spacer" type="Control" parent="Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
 custom_minimum_size = Vector2(20, 0)

@@ -1,41 +1,80 @@
 extends Node2D
 
-@export var ring_world: Resource
-
 @onready var tilemap = %DonutTileMapLayer
 @onready var player = %Player
 
-func _ready() -> void:	
-	var terrain_target = []
-	for x in range(ring_world.RingDepth):
-		for y in range(ring_world.RingInnerFaceCount):
-			terrain_target.append(Vector2i(x, y))
-			print("[ x: ", x, ", y: ", y, " ]")
-	tilemap.set_cells_terrain_connect(terrain_target, 0, 0, false)
-	
-	for x in range(ring_world.RingDepth):
-		for y in range(ring_world.RingInnerFaceCount):
-			var source_id = tilemap.get_cell_source_id(Vector2i(x, y))
-			var tile_data = tilemap.get_cell_atlas_coords(Vector2i(x, y))
-			tilemap.set_cell(Vector2i(x, y + ring_world.RingInnerFaceCount), source_id, tile_data)
-			tilemap.set_cell(Vector2i(x, y - ring_world.RingInnerFaceCount), source_id, tile_data)
+@export var ring_world: SpaceDonut
+@export var player_coords: Vector2i
 
-			tilemap.set_cell(Vector2i(x, y + ring_world.RingInnerFaceCount * 2), source_id, tile_data)
-			tilemap.set_cell(Vector2i(x, y - ring_world.RingInnerFaceCount * 2), source_id, tile_data)
+var active_tile_map: Array[Array] = []
+var ring_world_reference_map: Array[Array] = []
+var player_tile_pos: Vector2i
+var tile_size: int = 32
+var world_x_max: int
+var world_y_max: int
+var display_radius: int = 30
 
-			tilemap.set_cell(Vector2i(x, y + ring_world.RingInnerFaceCount * 3), source_id, tile_data)
-			tilemap.set_cell(Vector2i(x, y - ring_world.RingInnerFaceCount * 3), source_id, tile_data)
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	var x_max = ring_world.ring_world_x_max
+	var y_max = ring_world.ring_world_y_max
+	world_x_max = x_max
+	world_y_max = y_max
+	ring_world.build_if_new()
+	ring_world_reference_map = ring_world.tile_map
+	gen_active_tile_map()
 
-			tilemap.set_cell(Vector2i(x, y + ring_world.RingInnerFaceCount * 4), source_id, tile_data)
-			tilemap.set_cell(Vector2i(x, y - ring_world.RingInnerFaceCount * 4), source_id, tile_data)
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	update_player_tile_pos()
+	display_tiles_in_radius()
+	montor_and_move_player_when_crossing_y_bounds()
+	update_export_player_coords()
 
-			tilemap.set_cell(Vector2i(x, y + ring_world.RingInnerFaceCount * 5), source_id, tile_data)
-			tilemap.set_cell(Vector2i(x, y - ring_world.RingInnerFaceCount * 5), source_id, tile_data)
+func display_tiles_in_radius():
+	var display_tiles = []
+	var player_tile_pos = Vector2i(player.position / tile_size)  # Update tile size accordingly
+	# Generate tiles within a radius
+	for x in range(-display_radius, display_radius + 1):
+		for y in range(-display_radius, display_radius + 1):
+			if Vector2(x, y).length() <= display_radius:  # Check if within circle
+				display_tiles.append(player_tile_pos + Vector2i(x, y))
+	# Populate the tiles
+	for tile in display_tiles:
+		if tile.x > 0 and tile.y > 0:
+			if tile.x < world_x_max and tile.y < world_y_max:
+				tilemap.set_cell(tile, 1, ring_world_reference_map[tile.x][tile.y])
+				active_tile_map[tile.x][tile.y] = 1
+	# Prep to depopulate the tiles that aren't within the radius.
+	var remove_tiles = []
+	for x in range(0 , world_x_max):
+		for y in range(0 , world_y_max):
+			if active_tile_map[x][y] == 1:
+				remove_tiles.append(Vector2i(x, y))
+	# Filter to ensure we don't remove tiles withing sight radius
+	for tile in display_tiles:
+		remove_tiles.erase(tile)
+	# Remove the tiles not within the radius
+	for target in remove_tiles:
+		tilemap.set_cell(target, -1)
+		active_tile_map[target.x][target.y] = 0
 
-func _process(delta: float) -> void:
-	print(player.position)
-	print(ring_world.RingInnerFaceCount)
-	if player.position.y > ring_world.RingInnerFaceCount * 32:
+func gen_active_tile_map():
+	for x in range(0 , world_x_max):
+		active_tile_map.append([])
+		for y in range(0 , world_y_max):
+			active_tile_map[x].append(0)
+
+func montor_and_move_player_when_crossing_y_bounds():
+	if player_tile_pos.y > world_y_max:
 		player.position.y = 0
-	if player.position.y < 0:
-		player.position.y = ring_world.RingInnerFaceCount * 32
+	if player_tile_pos.y < 0:
+		player.position.y = world_y_max * 32
+	
+func update_export_player_coords():
+	player_coords = player.position
+	print(player_coords / Vector2i(32, 32))
+
+func update_player_tile_pos():
+	var player_in_block = Vector2(player.position.x / tile_size as int, player.position.y / tile_size as int)
+	player_tile_pos = player_in_block

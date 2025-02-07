@@ -9,6 +9,7 @@
 [node name="DonutInteriorMap" type="Node2D"]
 script = ExtResource("1_tuycd")
 ring_world = ExtResource("2_40uvj")
+player_coords = null
 
 [node name="Camera2D2" type="Camera2D" parent="."]
 zoom = Vector2(0.25, 0.25)
