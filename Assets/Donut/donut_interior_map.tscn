@@ -1,10 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bwh3ydq45bsue"]
+[gd_scene load_steps=13 format=4 uid="uid://bwh3ydq45bsue"]
 
 [ext_resource type="Script" path="res://Assets/Donut/donut_interior_map.gd" id="1_tuycd"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_40uvj"]
 [ext_resource type="Script" path="res://Assets/Player/player_camera_2d.gd" id="3_1fihw"]
 [ext_resource type="TileSet" uid="uid://b0o58eyb2u6dh" path="res://Assets/DonutUI/donut_tile_map.tres" id="3_m7235"]
 [ext_resource type="PackedScene" uid="uid://cbchvi8c0dikm" path="res://Assets/Player/player.tscn" id="4_vynwq"]
+[ext_resource type="Texture2D" uid="uid://becupk3w3fvxv" path="res://Assets/Textures/TextureArrayBorders.png" id="6_thise"]
+[ext_resource type="Texture2D" uid="uid://bqaukautktbe2" path="res://Assets/Textures/TextureArrayBordersCaution.png" id="7_7sw24"]
 
 [sub_resource type="Gradient" id="Gradient_jqqs8"]
 offsets = PackedFloat32Array(0.501558, 0.629283)
@@ -15,24 +17,47 @@ gradient = SubResource("Gradient_jqqs8")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_l57sm"]
+texture = ExtResource("6_thise")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e154f"]
+texture = ExtResource("7_7sw24")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_vsoj2"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_l57sm")
+sources/1 = SubResource("TileSetAtlasSource_e154f")
+
 [node name="DonutInteriorMap" type="Node2D"]
 script = ExtResource("1_tuycd")
 ring_world = ExtResource("2_40uvj")
 
 [node name="Camera2D2" type="Camera2D" parent="."]
-zoom = Vector2(0.25, 0.25)
 script = ExtResource("3_1fihw")
 
 [node name="TextureRect" type="TextureRect" parent="Camera2D2"]
 z_index = 3
-offset_left = -1037.0
-offset_top = -1059.0
-offset_right = -973.0
-offset_bottom = -995.0
-scale = Vector2(32.1836, 32.1836)
+offset_left = -765.0
+offset_top = -779.0
+offset_right = -701.0
+offset_bottom = -715.0
+scale = Vector2(23.419, 23.419)
 texture = SubResource("GradientTexture2D_7jqxa")
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D2"]
+visible = false
 offset_left = -4144.0
 offset_top = -2240.0
 offset_right = -4104.0
@@ -47,3 +72,8 @@ position = Vector2(40, 43)
 [node name="DonutTileMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 tile_set = ExtResource("3_m7235")
+
+[node name="TargetAreaMapLayer" type="TileMapLayer" parent="."]
+z_index = 1
+tile_map_data = PackedByteArray("AAACAAIAAQAAAAAAAAADAAMAAQABAAAAAAAEAAMAAQADAAAAAAADAAQAAQABAAAAAGAFAAMAAQABAAAAAFAFAAQAAQABAAAAADAGAAIAAQAEAAAAAGAHAAIAAQACAAAAAFAEAAQAAQADAAAAADAIAAIAAQAEAAAAAFA=")
+tile_set = SubResource("TileSet_vsoj2")

@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b0o58eyb2u6dh"]
 
-[ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArray.png" id="1_3chyv"]
+[ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArraySoil.png" id="1_nej83"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13rvr"]
 resource_name = "80"
-texture = ExtResource("1_3chyv")
+texture = ExtResource("1_nej83")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0

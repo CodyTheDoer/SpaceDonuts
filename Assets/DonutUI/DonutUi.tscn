@@ -284,6 +284,7 @@ theme_override_font_sizes/normal_font_size = 32
 text = "Harvest Stats"
 
 [node name="CabbageGreen" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -348,6 +349,7 @@ text = "count"
 text_direction = 2
 
 [node name="CabbageRed" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -380,6 +382,7 @@ text = "count"
 text_direction = 2
 
 [node name="CabbageSavoy" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -412,6 +415,7 @@ text = "count"
 text_direction = 2
 
 [node name="Cucumbers" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -444,6 +448,7 @@ text = "count"
 text_direction = 2
 
 [node name="GarlicElephant" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -476,6 +481,7 @@ text = "count"
 text_direction = 2
 
 [node name="Lettuce" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -508,6 +514,7 @@ text = "count"
 text_direction = 2
 
 [node name="MustardMizuna" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -540,6 +547,7 @@ text = "count"
 text_direction = 2
 
 [node name="MustardPizzo" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -572,6 +580,7 @@ text = "count"
 text_direction = 2
 
 [node name="Onions" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -604,6 +613,7 @@ text = "count"
 text_direction = 2
 
 [node name="Peppers" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -636,6 +646,7 @@ text = "count"
 text_direction = 2
 
 [node name="Potatoes" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -669,6 +680,7 @@ text = "count"
 text_direction = 2
 
 [node name="SunFlowers" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -701,6 +713,7 @@ text = "count"
 text_direction = 2
 
 [node name="Tomatoes" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -733,6 +746,7 @@ text = "count"
 text_direction = 2
 
 [node name="WheatApogey" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
@@ -765,6 +779,7 @@ text = "count"
 text_direction = 2
 
 [node name="WheatSuperDwarf" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
