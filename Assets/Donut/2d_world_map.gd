@@ -32,6 +32,7 @@ var original_right_click_position: Vector2
 var hover_left_click_position: Vector2
 var hover_right_click_position: Vector2
 var both_clicked: bool = false
+var starting_point: Vector2
 
 var popup_target: int
 
@@ -89,7 +90,6 @@ func world_options_popup_menu():
 	var just_pressed_space = Input.is_action_just_pressed("space")
 	var pressed_space = Input.is_action_pressed("space")
 	var released_space = Input.is_action_just_released("space")
-	var starting_point: Vector2
 	if just_pressed_space:
 		starting_point = get_global_mouse_position()
 		popup_action_menu.position = get_global_mouse_position()
@@ -102,7 +102,6 @@ func world_options_popup_menu():
 		var segments = len(popup_action_menu.options_array)
 		var single_segment_angle = 360 / segments
 		popup_target = (selection_direction / single_segment_angle)
-		#print("Selection:", popup_target)
 	if released_space:
 		popup_action_menu.visible = false
 	if popup_action_menu.selection_confirmed:

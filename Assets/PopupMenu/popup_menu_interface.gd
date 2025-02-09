@@ -8,7 +8,6 @@ extends Node2D
 @export var antialiasing: bool = false
 @export var distance_from_center: int = 120
 @export var segment_gap: int = 5
-@export var width: int = 12
 @export var color: Color = Color.GREEN
 @export var starting_point: Vector2 = Vector2.ZERO
 @export var selection: int
@@ -17,23 +16,100 @@ extends Node2D
 var selection_direction: int # n/360 
 var segments: int = 0
 
+var _time : float = 0
+var _popup_arc_width : float = 30
+var _min_width : float = 30
+var _max_width : float = 40
+
 func _ready() -> void:
 	if options_array.is_empty():
 		options_array = popup_soil_options_labels.get_label_array()
 		#print(options_array)
 	segments = len(options_array)
-	update_rotate_radial()
+	update_rotate_labels()
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	update_rotate_radial()
 	track_selection_direction()
+	_time += delta
+	
+	# Animation Context:
+		#sin(_time) oscillates between -1 and 1.
+		#abs(sin(_time)) ensures it stays between 0 and 1.
+		#Multiplying by (_max_width - _min_width) scales the range to 0 to the width difference.
+		#Adding _min_width shifts the range to [min_width, max_width].
+		#clamp(value, min, max) ensures no overshooting occurs.
+
+	_popup_arc_width = clamp(abs(sin(_time)) * (_max_width - _min_width) + _min_width, _min_width, _max_width)
+	queue_redraw()
+	rotate_radial.queue_redraw()
 
 func update_rotate_radial():
 	rotate_radial.segments = segments
 	rotate_radial.distance_from_center = distance_from_center
 	rotate_radial.segment_gap = segment_gap
 	rotate_radial.color = color
-	rotate_radial.width = width
+	rotate_radial.width = _popup_arc_width
 	rotate_radial.antialiasing = antialiasing
+
+func update_rotate_labels():
+	if segments == 1:
+		var additional_rotation_ammount: int = 360 / segments / 2 + 180
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments == 2:
+		var additional_rotation_ammount: int = 360 / segments / 2 + 175
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments == 3:
+		var additional_rotation_ammount: int = 360 / segments / 2 - 90
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments == 4:
+		var additional_rotation_ammount: int = 360 / segments / 2 - 45
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments == 5:
+		var additional_rotation_ammount: int = 360 / segments / 2 - 22.5
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments == 6:
+		var additional_rotation_ammount: int = 360 / segments / 2
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments == 7:
+		var additional_rotation_ammount: int = 360 / segments / 2 + 22.5
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments >= 8:
+		var additional_rotation_ammount: int = 360 / segments / 2 + 22.5
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+
+func draw_label(p1: Vector2, label: String):
+	var new_label: Label = Label.new()
+	new_label.text = label
+	new_label.theme = load("res://Assets/Fonts/std_theme.tres") 
+	new_label.set_anchors_preset(Control.PRESET_CENTER)
+	
+	if segments == 1:
+		new_label.rotation = -1.75
+		new_label.position = p1 - Vector2(0, 0)
+	if segments == 2:
+		new_label.rotation = 0
+		new_label.position = p1 - Vector2(20, 60)
+	if segments == 3:
+		new_label.rotation = -1.5
+		new_label.position = p1 - Vector2(-10, -10)
+	if segments == 4:
+		new_label.rotation = -1.75
+		new_label.position = p1 - Vector2(-10, 0)
+	if segments == 5:
+		new_label.rotation = -1.75
+		new_label.position = p1 - Vector2(-10, 0)
+	if segments == 6:
+		new_label.rotation = -1.75
+		new_label.position = p1 - Vector2(-10, 10)
+	if segments == 7:
+		new_label.rotation = -2.25
+		new_label.position = p1 - Vector2(-25, 5)
+	if segments >= 8:
+		new_label.rotation = -2.25
+		new_label.position = p1 - Vector2(-25, 15)
+	
+	rotate_labels.add_child(new_label)  
 
 func track_selection_direction():
 	var just_pressed_space = Input.is_action_just_pressed("space")
@@ -86,16 +162,6 @@ func draw_segments():
 		draw_arc_segment(p1, p2)
 		draw_label(extended_center_angle_point, popup_soil_options_labels.get_label_array()[segment - 1])
 
-func draw_label(p1: Vector2, label: String):
-	var new_label: Label = Label.new()
-	new_label.text = label
-	new_label.theme = load("res://Assets/Fonts/std_theme.tres") 
-	new_label.position = p1 - Vector2(0, 0)
-	new_label.set_anchors_preset(Control.PRESET_CENTER)
-	new_label.rotation = -1.7
-	
-	rotate_labels.add_child(new_label)  
-
 func draw_arc_segment(p1: Vector2, p2: Vector2):
 	var center: Vector2 = Vector2.ZERO  # Drawing from (0,0)
 	var start_angle = atan2(p1.y - center.y, p1.x - center.x)
@@ -108,4 +174,4 @@ func draw_arc_segment(p1: Vector2, p2: Vector2):
 		end_angle += TAU
 
 	# Draw the arc
-	rotate_radial.draw_arc(center, distance_from_center, start_angle, end_angle, 50, color, width, antialiasing)
+	rotate_radial.draw_arc(center, distance_from_center, start_angle, end_angle, 50, color, _popup_arc_width, antialiasing)
