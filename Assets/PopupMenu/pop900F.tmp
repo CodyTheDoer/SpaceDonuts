@@ -17,8 +17,5 @@ modulate = Color(1, 1, 1, 0.686275)
 texture = ExtResource("2_k01ix")
 
 [node name="rotate_radial" type="Node2D" parent="."]
-rotation = 3.14159
+rotation = 1.5708
 script = ExtResource("4_hypsl")
-
-[node name="rotate_labels" type="Node2D" parent="."]
-rotation = 2.0944

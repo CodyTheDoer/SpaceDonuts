@@ -66,7 +66,7 @@ func show_tiles_within_player_radius():
 				tiles_within_player_radius.append(tile_position)
 	for tile in tiles_within_player_radius:
 		tilemap.set_cell(tile, 0, tile_value_reference[tile.x][tile.y])
-	print(tiles_within_player_radius)
+	#print(tiles_within_player_radius)
 
 func player_in_block():
 	var player_in_block = Vector2(player.position.x / tile_size as int, player.position.y / tile_size as int)

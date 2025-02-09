@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var popup_action_menu: Node2D = $popup_action_menu
-
 @onready var target_area_map_layer: TileMapLayer = $TargetAreaMapLayer
 @onready var remove_area_map_layer: TileMapLayer = $RemoveAreaMapLayer
 @onready var wip_area_map_layer: TileMapLayer = $WIPAreaMapLayer
@@ -33,6 +32,8 @@ var original_right_click_position: Vector2
 var hover_left_click_position: Vector2
 var hover_right_click_position: Vector2
 var both_clicked: bool = false
+
+var popup_target: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -85,13 +86,29 @@ func init_player_interface_map():
 
 # // --- _process() --- //
 func world_options_popup_menu():
-	var pressed_space = Input.is_action_just_pressed("space")
+	var just_pressed_space = Input.is_action_just_pressed("space")
+	var pressed_space = Input.is_action_pressed("space")
 	var released_space = Input.is_action_just_released("space")
+	var starting_point: Vector2
+	if just_pressed_space:
+		starting_point = get_global_mouse_position()
+		popup_action_menu.position = get_global_mouse_position()
 	if pressed_space:
 		popup_action_menu.visible = true
-		popup_action_menu.position = get_global_mouse_position()
+		var ending_point = get_global_mouse_position()
+		var difference: Vector2 = Vector2(ending_point.x, ending_point.y) - Vector2(starting_point.x, starting_point.y)
+		var angle: float = atan2(difference.y, difference.x) / PI
+		var selection_direction = (angle + 1) * 180
+		var segments = len(popup_action_menu.options_array)
+		var single_segment_angle = 360 / segments
+		popup_target = (selection_direction / single_segment_angle)
+		#print("Selection:", popup_target)
 	if released_space:
 		popup_action_menu.visible = false
+	if popup_action_menu.selection_confirmed:
+		popup_action_menu.selection = popup_target
+		print("Selection Confirmed:", popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection] )
+		popup_action_menu.selection_confirmed = false
 
 func update_player_tile_pos():
 	var player_in_block = Vector2(player.position.x / tile_size as int, player.position.y / tile_size as int)
@@ -341,7 +358,7 @@ func remove_remove_area_map_duplicates():
 				player_interface_mapped_targets.erase(target)
 
 func remove_range_from_player_interface_map(p1: Vector2, p2: Vector2):
-	print(p1, p2)
+	#print(p1, p2)
 	var difference = p1 - p2
 	
 	# No movement, Original position

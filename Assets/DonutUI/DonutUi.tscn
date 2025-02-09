@@ -63,7 +63,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(600, 980)
+size = Vector2i(600, 2)
 render_target_update_mode = 4
 
 [node name="DonutInteriorMap" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport" instance=ExtResource("3_1sr3o")]
@@ -837,7 +837,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="Screen/OrbitDisplay/3D/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(915, 588)
+size = Vector2i(2, 2)
 render_target_update_mode = 4
 
 [node name="Space" parent="Screen/OrbitDisplay/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]

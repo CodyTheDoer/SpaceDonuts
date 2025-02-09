@@ -6,6 +6,7 @@ const TILL = 1
 const GRASS = 2
 const ROCK = 3
 const DIRT = 4
+const PLANT = 5
 
 var label = {
 	0: "Cancel",
@@ -13,6 +14,7 @@ var label = {
 	2: "Grass",
 	3: "Rock",
 	4: "Dirt",
+	5: "Plant",
 }
 
 func get_label_array():
@@ -22,5 +24,6 @@ func get_label_array():
 		label[GRASS],
 		label[ROCK],
 		label[DIRT],
+		label[PLANT]
 	]
 	return label_array
