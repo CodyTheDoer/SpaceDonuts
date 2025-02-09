@@ -1,24 +1,33 @@
 extends Node2D
 
+@onready var popup_action_menu: Node2D = $popup_action_menu
+
 @onready var target_area_map_layer: TileMapLayer = $TargetAreaMapLayer
 @onready var remove_area_map_layer: TileMapLayer = $RemoveAreaMapLayer
 @onready var wip_area_map_layer: TileMapLayer = $WIPAreaMapLayer
 @onready var tilemap: TileMapLayer = %DonutTileMapLayer
 @onready var player: Player = %Player
+@onready var camera_2d: Camera2D = %Camera2D2
 
 @export var ring_world: SpaceDonut
 @export var player_coords: Vector2i
+@export var camera_zoom: float = 1
+@export var popup_options_labels: Resource
+
+signal current_camera_zoom(camera_zoom: float)
 
 var active_tile_map: Array[Array] = []
+var ring_world_reference_map: Array[Array] = []
 var player_interface_map: Array[Array] = []
 var player_interface_mapped_targets = []
 var remove_interface_mapped_targets = []
-var ring_world_reference_map: Array[Array] = []
+
 var player_tile_pos: Vector2i
 var tile_size: int = 32
 var world_x_max: int
 var world_y_max: int
 var display_radius: int = 25
+
 var original_left_click_position: Vector2
 var original_right_click_position: Vector2
 var hover_left_click_position: Vector2
@@ -34,11 +43,22 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
+	current_camera_zoom.emit(camera_zoom)
 	update_player_tile_pos()
 	display_tiles_in_radius()
 	montor_and_move_player_when_crossing_y_bounds()
 	update_export_player_coords()
 	monitor_player_click_and_drag_for_target_area()
+	world_options_popup_menu()
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			if Vector2(camera_zoom, camera_zoom) < Vector2(2, 2):
+				camera_zoom += 0.035
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			if Vector2(camera_zoom, camera_zoom) > Vector2(1, 1):
+				camera_zoom -= 0.035
 
 # // --- _ready() --- //
 func set_ring_world_x_and_y():
@@ -64,6 +84,15 @@ func init_player_interface_map():
 			player_interface_map[x].append(0)
 
 # // --- _process() --- //
+func world_options_popup_menu():
+	var pressed_space = Input.is_action_just_pressed("space")
+	var released_space = Input.is_action_just_released("space")
+	if pressed_space:
+		popup_action_menu.visible = true
+		popup_action_menu.position = get_global_mouse_position()
+	if released_space:
+		popup_action_menu.visible = false
+
 func update_player_tile_pos():
 	var player_in_block = Vector2(player.position.x / tile_size as int, player.position.y / tile_size as int)
 	player_tile_pos = player_in_block
@@ -108,7 +137,7 @@ func update_export_player_coords():
 func monitor_player_click_and_drag_for_target_area():
 	var input_right_click = Input.is_action_just_pressed("right_click")
 	var input_left_click = Input.is_action_just_pressed("left_click")
-		
+	
 	var pressed_right_click = Input.is_action_pressed("right_click")
 	var pressed_left_click = Input.is_action_pressed("left_click")
 	
@@ -123,7 +152,6 @@ func monitor_player_click_and_drag_for_target_area():
 		animate_target_bounds_from_og_to_hover_remove(original_right_click_position, hover_right_click_position)
 	if release_right_click and !pressed_left_click:
 		remove_area_map_layer.clear()
-		print(original_right_click_position, hover_right_click_position)
 		remove_range_from_player_interface_map(original_right_click_position, hover_right_click_position)
 	
 	if input_left_click:
@@ -132,7 +160,6 @@ func monitor_player_click_and_drag_for_target_area():
 	if pressed_left_click:
 		if release_right_click:
 			remove_interface_mapped_targets.append([original_right_click_position, hover_right_click_position])
-			print("remove_interface_mapped_targets: ", remove_interface_mapped_targets)
 			both_clicked = true
 		hover_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
 		animate_target_bounds_from_og_to_hover_target(original_left_click_position, hover_left_click_position)
@@ -320,29 +347,24 @@ func remove_range_from_player_interface_map(p1: Vector2, p2: Vector2):
 	# No movement, Original position
 	if p1.x == p2.x and p1.y == p2.y:
 		player_interface_mapped_targets.erase(p1)
-		#remove_interface_mapped_targets.append(p1)
 	
 	# Single wide Column, Y movement 
 	if difference.x == 0 and difference.y != 0:
 		if difference.y > 0:
 			for y in difference.y + 1:
 				player_interface_mapped_targets.erase(p1 - Vector2(0, y))
-				#remove_interface_mapped_targets.append(p1 - Vector2(0, y))
 		else:
 			for y in -difference.y + 1:
 				player_interface_mapped_targets.erase(p1 + Vector2(0, y))
-				#remove_interface_mapped_targets.append(p1 + Vector2(0, y))
 	
 	# Single wide Row, X movement 
 	if difference.x != 0 and difference.y == 0:
 		if difference.x > 0:
 			for x in difference.x + 1:
 				player_interface_mapped_targets.erase(p1 - Vector2(x, 0))
-				#remove_interface_mapped_targets.append(p1 - Vector2(x, 0))
 		else:
 			for x in -difference.x + 1:
 				player_interface_mapped_targets.erase(p1 + Vector2(x, 0))
-				#remove_interface_mapped_targets.append(p1 + Vector2(x, 0))
 	
 	# Expanded in two directions, X and Y movement
 	if difference != Vector2(0, 0):
@@ -351,27 +373,26 @@ func remove_range_from_player_interface_map(p1: Vector2, p2: Vector2):
 			for x in difference.x + 1:
 				for y in difference.y + 1:
 					player_interface_mapped_targets.erase(p1 - Vector2(x, y))
-					#remove_interface_mapped_targets.append(p1 - Vector2(x, y))
 		# Bottom Left
 		if difference.x > 0 and difference.y < 0:
 			for x in difference.x + 1:
 				for y in -difference.y + 1:
 					player_interface_mapped_targets.erase(p1 - Vector2(x, -y))
-					#remove_interface_mapped_targets.append(p1 - Vector2(x, -y))
 		# Upper Right
 		if difference.x < 0 and difference.y > 0:
 			for x in -difference.x + 1:
 				for y in difference.y + 1:
 					player_interface_mapped_targets.erase(p1 - Vector2(-x, y))
-					#remove_interface_mapped_targets.append(p1 - Vector2(-x, y))
 		# Bottom Right
 		else:
 			for x in -difference.x + 1:
 				for y in -difference.y + 1:
 					player_interface_mapped_targets.erase(p1 + Vector2(x, y))
-					#remove_interface_mapped_targets.append(p1 + Vector2(x, y))
 	
 	wip_area_map_layer.clear()
 	wip_area_map_layer.set_cells_terrain_connect(player_interface_mapped_targets, 0, 0, true)
 	
 	remove_remove_area_map_duplicates()
+
+func _update_player_camera_zoom(value: float) -> void:
+	camera_zoom = value

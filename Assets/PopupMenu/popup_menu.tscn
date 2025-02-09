@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://lwguu2evjanf"]
+
+[ext_resource type="Script" path="res://Assets/PopupMenu/popup_menu_interface.gd" id="1_2udcn"]
+[ext_resource type="Texture2D" uid="uid://cfl3pt8ght0fg" path="res://Assets/Textures/popup menu/bg1.png" id="2_k01ix"]
+
+[node name="popup_action_menu" type="Node2D"]
+script = ExtResource("1_2udcn")
+color = Color(0.588752, 0.424677, 0.65078, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.686275)
+texture = ExtResource("2_k01ix")

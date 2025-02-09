@@ -155,11 +155,16 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Zoom : "
 
-[node name="Slider2DCameraZoom" type="HSlider" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCamera/HBoxContainer"]
+[node name="PlayerZoomSlider" type="HSlider" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCamera/HBoxContainer"]
+unique_name_in_owner = true
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
+min_value = 1.0
+max_value = 2.0
+step = 0.001
+value = 1.0
 
 [node name="ResourceUtil" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 150)
@@ -931,3 +936,6 @@ size_flags_horizontal = 3
 
 [node name="Control" type="Control" parent="Screen"]
 layout_mode = 2
+
+[connection signal="current_camera_zoom" from="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
+[connection signal="value_changed" from="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCamera/HBoxContainer/PlayerZoomSlider" to="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport/DonutInteriorMap" method="_update_player_camera_zoom"]

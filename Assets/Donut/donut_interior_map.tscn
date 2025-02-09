@@ -1,13 +1,15 @@
-[gd_scene load_steps=13 format=4 uid="uid://bwh3ydq45bsue"]
+[gd_scene load_steps=15 format=4 uid="uid://bwh3ydq45bsue"]
 
-[ext_resource type="Script" path="res://Assets/Donut/donut_interior_map.gd" id="1_tuycd"]
+[ext_resource type="Script" path="res://Assets/Donut/2d_world_map.gd" id="1_tuycd"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_40uvj"]
+[ext_resource type="Resource" uid="uid://uvloam6bxdly" path="res://Assets/PopupMenu/popup_menu_resource.tres" id="2_r0tpk"]
 [ext_resource type="Script" path="res://Assets/Player/player_camera_2d.gd" id="3_1fihw"]
 [ext_resource type="TileSet" uid="uid://b0o58eyb2u6dh" path="res://Assets/DonutUI/donut_tile_map.tres" id="3_m7235"]
 [ext_resource type="PackedScene" uid="uid://cbchvi8c0dikm" path="res://Assets/Player/player.tscn" id="4_vynwq"]
 [ext_resource type="TileSet" uid="uid://c8rv2yhi76vb4" path="res://Assets/Textures/tset_yellow_target.tres" id="6_4yqsi"]
 [ext_resource type="TileSet" uid="uid://r3j7dfk5wlrg" path="res://Assets/Textures/tset_blue_target.tres" id="7_3o4wg"]
 [ext_resource type="Texture2D" uid="uid://chm15sadw6mip" path="res://Assets/Textures/TextureArrayBordersRemoveExpanded.png" id="8_usrw4"]
+[ext_resource type="PackedScene" uid="uid://lwguu2evjanf" path="res://Assets/PopupMenu/popup_menu.tscn" id="9_1w1li"]
 
 [sub_resource type="Gradient" id="Gradient_jqqs8"]
 offsets = PackedFloat32Array(0.501558, 0.629283)
@@ -341,14 +343,16 @@ terrain_set_0/terrain_0/name = "RedTarget"
 terrain_set_0/terrain_0/color = Color(0.727944, 0, 0.107231, 1)
 sources/0 = SubResource("TileSetAtlasSource_juemi")
 
-[node name="DonutInteriorMap" type="Node2D"]
+[node name="DonutMap" type="Node2D"]
 script = ExtResource("1_tuycd")
 ring_world = ExtResource("2_40uvj")
+popup_options_labels = ExtResource("2_r0tpk")
 
-[node name="Camera2D2" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_1fihw")
 
-[node name="TextureRect" type="TextureRect" parent="Camera2D2"]
+[node name="TextureRect" type="TextureRect" parent="Camera2D"]
 z_index = 3
 offset_left = -737.0
 offset_top = -738.0
@@ -357,7 +361,7 @@ offset_bottom = -674.0
 scale = Vector2(23.419, 23.419)
 texture = SubResource("GradientTexture2D_7jqxa")
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D2"]
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
 visible = false
 offset_left = -4144.0
 offset_top = -2240.0
@@ -386,3 +390,9 @@ tile_set = ExtResource("7_3o4wg")
 z_index = 2
 tile_map_data = PackedByteArray("AAD4/wEAAQAAAAAAAAD5/wIAAQABAAAAAAD5/wMAAQABAAAAAGD6/wIAAQADAAAAAAD6/wMAAQADAAAAADD7/wIAAQABAAAAAFD7/wMAAQABAAAAADD8/wEAAQAEAAAAAGD9/wEAAQACAAAAAFD+/wEAAQAEAAAAAFA=")
 tile_set = SubResource("TileSet_5wqj4")
+
+[node name="popup_action_menu" parent="." instance=ExtResource("9_1w1li")]
+visible = false
+z_index = 3
+
+[connection signal="current_camera_zoom" from="." to="Camera2D" method="_set_current_camera_zoom"]
