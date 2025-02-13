@@ -103,7 +103,7 @@ script = ExtResource("1_fkdw2")
 unique_name_in_owner = true
 transform = Transform3D(-0.106316, 0, 0.994332, 0, 1, 0, -0.994332, 0, -0.106316, 0, 0, 0)
 
-[node name="Camera3DOrbitControl" type="Node3D" parent="."]
+[node name="Camera3DOrbitControl" type="Node3D" parent="." groups=["Camera3DOrbit"]]
 transform = Transform3D(12, 0, 0, 0, 80, 0, 0, 0, 12, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Camera3DOrbitControl"]
@@ -112,16 +112,16 @@ environment = SubResource("Environment_0nt65")
 fov = 92.0
 script = ExtResource("3_qi5ov")
 
-[node name="InnerRing" type="MeshInstance3D" parent="." groups=["Camera3DOrbit"]]
+[node name="InnerRing" type="MeshInstance3D" parent="."]
 transform = Transform3D(12, 0, 0, 0, 80, 0, 0, 0, 12, 0, 0, 0)
 mesh = SubResource("TorusMesh_3t187")
 surface_material_override/0 = SubResource("StandardMaterial3D_0csx8")
 
-[node name="InnerRingSky" type="MeshInstance3D" parent="." groups=["Camera3DOrbit"]]
+[node name="InnerRingSky" type="MeshInstance3D" parent="."]
 transform = Transform3D(12, 0, 0, 0, 81.5085, 0, 0, 0, 12, 0, 0, 0)
 mesh = SubResource("TorusMesh_68rbg")
 
-[node name="OuterRing" type="MeshInstance3D" parent="." groups=["Camera3DOrbit"]]
+[node name="OuterRing" type="MeshInstance3D" parent="."]
 transform = Transform3D(12, 0, 0, 0, 168.558, 0, 0, 0, 12, 0, 0, 0)
 mesh = SubResource("TorusMesh_1703n")
 surface_material_override/0 = SubResource("StandardMaterial3D_qkiw1")

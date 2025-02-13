@@ -54,7 +54,7 @@ var potential_matches = {
 	"TILLED": 4,
 }
 
-# // --- These need to be updated together --- // 
+# // --- These need to be updated together ^^^ --- // 
 var tile_atlas_paths = {
 	0 : Vector2i(0, 0),
 	1 : Vector2i(2, 0),
@@ -68,7 +68,6 @@ func _ready() -> void:
 	set_ring_world_x_and_y()
 	build_ringworld_map()
 	init_active_tile_map()
-	#init_player_interface_map()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -78,7 +77,6 @@ func _process(_delta: float) -> void:
 	monitor_and_move_player_when_crossing_y_bounds()
 	monitor_and_stop_player_when_crossing_x_bounds()
 	update_export_player_coords()
-	#monitor_player_click_and_drag_for_target_area()
 	world_options_popup_menu()
 	monitor_tile_queue()
 
@@ -155,12 +153,6 @@ func init_active_tile_map():
 		active_tile_map.append([])
 		for y in range(0 , world_y_max):
 			active_tile_map[x].append(0)
-
-#func init_player_interface_map():
-	#for x in range(0 , world_x_max):
-		#player_interface_map.append([])
-		#for y in range(0 , world_y_max):
-			#player_interface_map[x].append(0)
 
 # // --- _process() --- //
 func world_options_popup_menu():

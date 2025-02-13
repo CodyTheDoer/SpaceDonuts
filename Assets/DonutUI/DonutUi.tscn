@@ -27,38 +27,58 @@ script = ExtResource("1_6ajj8")
 space_donut = ExtResource("2_3n4wt")
 player_indicator_res = ExtResource("2_4yysp")
 
-[node name="Screen" type="HBoxContainer" parent="."]
+[node name="bg orange" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.397743, 0.176959, 0.00951227, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="spacer" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="Screen" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="TopDownMap" type="VBoxContainer" parent="Screen"]
+[node name="TopDownMap" type="VBoxContainer" parent="VBoxContainer/Screen"]
 layout_mode = 2
 
-[node name="YIndicator and Map" type="HBoxContainer" parent="Screen/TopDownMap"]
+[node name="YIndicator and Map" type="HBoxContainer" parent="VBoxContainer/Screen/TopDownMap"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="PlayerMapHeightIndicator" type="VSlider" parent="Screen/TopDownMap/YIndicator and Map"]
+[node name="Spacer" type="Control" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map"]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+
+[node name="PlayerMapHeightIndicator" type="VSlider" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme = ExtResource("5_ey4y7")
 value = 100.0
 scrollable = false
 
-[node name="MapInterface" type="Control" parent="Screen/TopDownMap/YIndicator and Map"]
+[node name="MapInterface" type="Control" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map"]
 clip_contents = true
 custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="ColorRect" type="ColorRect" parent="Screen/TopDownMap/YIndicator and Map/MapInterface"]
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map/MapInterface"]
 modulate = Color(0.596426, 0.160963, 0.155038, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -67,7 +87,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="2DMapViewportContainer" type="SubViewportContainer" parent="Screen/TopDownMap/YIndicator and Map/MapInterface"]
+[node name="2DMapViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map/MapInterface"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -78,35 +98,37 @@ grow_vertical = 2
 focus_mode = 0
 stretch = true
 
-[node name="2DMapViewport" type="SubViewport" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer"]
+[node name="2DMapViewport" type="SubViewport" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer"]
 handle_input_locally = false
-size = Vector2i(600, 980)
+size = Vector2i(600, 964)
 render_target_update_mode = 4
 
-[node name="DonutInteriorMap" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport" instance=ExtResource("3_1sr3o")]
+[node name="DonutInteriorMap" parent="VBoxContainer/Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport" instance=ExtResource("3_1sr3o")]
 unique_name_in_owner = true
 
-[node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="Screen/TopDownMap"]
+[node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="VBoxContainer/Screen/TopDownMap"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Screen/TopDownMap/SmallSpacer and XIndicator"]
+[node name="spacer" type="Control" parent="VBoxContainer/Screen/TopDownMap/SmallSpacer and XIndicator"]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 
-[node name="PlayerMapWidthIndicator" type="HSlider" parent="Screen/TopDownMap/SmallSpacer and XIndicator"]
+[node name="PlayerMapWidthIndicator" type="HSlider" parent="VBoxContainer/Screen/TopDownMap/SmallSpacer and XIndicator"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
 
-[node name="Stats Interface" type="Control" parent="Screen"]
+[node name="spacer" type="Control" parent="VBoxContainer/Screen/TopDownMap"]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="Stats Interface" type="Control" parent="VBoxContainer/Screen"]
 clip_contents = true
 custom_minimum_size = Vector2(490, 0)
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="Screen/Stats Interface"]
-modulate = Color(0.333155, 0.165922, 0.0183862, 1)
-z_index = 2
-material = SubResource("ShaderMaterial_wnl2t")
+[node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,28 +136,45 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Screen/Stats Interface"]
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer2"]
+modulate = Color(0.158148, 0.0639987, 0, 1)
+z_index = 2
+material = SubResource("ShaderMaterial_wnl2t")
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface"]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -6.0
+offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer"]
+layout_mode = 2
 theme = ExtResource("5_ey4y7")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen/Stats Interface/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="2DCameraInterface" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer"]
+[node name="2DCameraInterface" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -143,7 +182,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label2DCamera" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer"]
+[node name="Label2DCamera" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -153,11 +192,11 @@ theme = ExtResource("5_ey4y7")
 theme_override_font_sizes/normal_font_size = 31
 text = "Top down Camera"
 
-[node name="2DCameraZoom" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer"]
+[node name="2DCameraZoom" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -166,7 +205,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("5_ey4y7")
 
-[node name="Label2DCameraZoom" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer"]
+[node name="Label2DCameraZoom" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(115, 40)
 layout_mode = 2
@@ -174,7 +213,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Zoom : "
 
-[node name="PlayerZoomSlider" type="HSlider" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer"]
+[node name="PlayerZoomSlider" type="HSlider" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer"]
 unique_name_in_owner = true
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
@@ -185,11 +224,11 @@ max_value = 2.0
 step = 0.001
 value = 1.0
 
-[node name="QueueInfo" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer"]
+[node name="QueueInfo" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
-[node name="Control" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo"]
+[node name="Control" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 1
 anchors_preset = 15
@@ -198,7 +237,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -206,10 +245,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Updating" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer"]
+[node name="Updating" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="Updating" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/Updating"]
+[node name="Updating" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/Updating"]
 z_index = 2
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
@@ -218,7 +257,7 @@ theme = ExtResource("5_ey4y7")
 theme_override_font_sizes/normal_font_size = 31
 text = "Updating:"
 
-[node name="PlotsCount" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/Updating"]
+[node name="PlotsCount" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/Updating"]
 unique_name_in_owner = true
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
@@ -230,10 +269,10 @@ theme = ExtResource("5_ey4y7")
 text = "Ready..."
 text_direction = 2
 
-[node name="UpdatesQueued" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer"]
+[node name="UpdatesQueued" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="UpdatesQueuedLabel" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/UpdatesQueued"]
+[node name="UpdatesQueuedLabel" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/UpdatesQueued"]
 z_index = 2
 custom_minimum_size = Vector2(160, 40)
 layout_mode = 2
@@ -242,7 +281,7 @@ theme = ExtResource("5_ey4y7")
 theme_override_font_sizes/normal_font_size = 31
 text = "Queued:"
 
-[node name="UpdatesQueued" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/UpdatesQueued"]
+[node name="UpdatesQueued" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/QueueInfo/Control/VBoxContainer/UpdatesQueued"]
 unique_name_in_owner = true
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
@@ -254,11 +293,11 @@ theme = ExtResource("5_ey4y7")
 text = "0"
 text_direction = 2
 
-[node name="ResourceUtil" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer"]
+[node name="ResourceUtil" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 180)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -266,11 +305,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
+[node name="Control" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="LabelResourceUtil" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
+[node name="LabelResourceUtil" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -280,18 +319,18 @@ theme = ExtResource("5_ey4y7")
 theme_override_font_sizes/normal_font_size = 31
 text = "Resource Utilization"
 
-[node name="Land" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
+[node name="Land" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Land"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Land"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 30.0
 grow_horizontal = 2
 
-[node name="LabelLandUtil" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Land/HBoxContainer"]
+[node name="LabelLandUtil" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Land/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
@@ -299,25 +338,25 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Land: "
 
-[node name="SliderLandUtil" type="HSlider" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Land/HBoxContainer"]
+[node name="SliderLandUtil" type="HSlider" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Land/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
 
-[node name="Water" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
+[node name="Water" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Water"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Water"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 30.0
 grow_horizontal = 2
 
-[node name="LabelWaterUtil" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Water/HBoxContainer"]
+[node name="LabelWaterUtil" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Water/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
@@ -325,25 +364,25 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Water: "
 
-[node name="SliderWaterUtil" type="HSlider" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Water/HBoxContainer"]
+[node name="SliderWaterUtil" type="HSlider" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Water/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
 
-[node name="Power" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
+[node name="Power" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Power"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Power"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 30.0
 grow_horizontal = 2
 
-[node name="LabelPowerUtil" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Power/HBoxContainer"]
+[node name="LabelPowerUtil" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Power/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(130, 40)
 layout_mode = 2
@@ -351,18 +390,18 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Power:"
 
-[node name="SliderPowerUtil" type="HSlider" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Power/HBoxContainer"]
+[node name="SliderPowerUtil" type="HSlider" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/ResourceUtil/VBoxContainer/Power/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 size_flags_horizontal = 3
 editable = false
 
-[node name="HarvestStats" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 600)
+[node name="HarvestStats" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 580)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats"]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -370,7 +409,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelHarvestStats" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="LabelHarvestStats" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -380,11 +419,11 @@ theme = ExtResource("5_ey4y7")
 theme_override_font_sizes/normal_font_size = 32
 text = "Harvest Stats"
 
-[node name="CabbageNapa" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="CabbageNapa" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -392,7 +431,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropCabbageNapa" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa/HBoxContainer"]
+[node name="LabelCropCabbageNapa" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 40)
 layout_mode = 2
@@ -401,7 +440,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Cabbage - Napa : "
 
-[node name="TValueCropCabbageNapa" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa/HBoxContainer"]
+[node name="TValueCropCabbageNapa" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
 layout_direction = 2
@@ -412,12 +451,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="CabbageGreen" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="CabbageGreen" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -425,7 +464,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropCabbageGreen" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen/HBoxContainer"]
+[node name="LabelCropCabbageGreen" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -434,7 +473,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Cabbage - Green : "
 
-[node name="TValueCropCabbageGreen" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen/HBoxContainer"]
+[node name="TValueCropCabbageGreen" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -445,12 +484,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="CabbageRed" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="CabbageRed" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -458,7 +497,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropCabbageRed" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed/HBoxContainer"]
+[node name="LabelCropCabbageRed" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -467,7 +506,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Cabbage - Red : "
 
-[node name="TValueCropCabbageRed" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed/HBoxContainer"]
+[node name="TValueCropCabbageRed" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -478,12 +517,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="CabbageSavoy" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="CabbageSavoy" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -491,7 +530,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropCabbageSavoy" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy/HBoxContainer"]
+[node name="LabelCropCabbageSavoy" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -500,7 +539,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Cabbage - Savoy : "
 
-[node name="TValueCropCabbageSavoy" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy/HBoxContainer"]
+[node name="TValueCropCabbageSavoy" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -511,12 +550,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="Cucumbers" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="Cucumbers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -524,7 +563,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropCucumbers" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers/HBoxContainer"]
+[node name="LabelCropCucumbers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -533,7 +572,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Cucumbers : "
 
-[node name="TValueCropCucumbers" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers/HBoxContainer"]
+[node name="TValueCropCucumbers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -544,12 +583,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="GarlicElephant" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="GarlicElephant" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -557,7 +596,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropGarlicElephant" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant/HBoxContainer"]
+[node name="LabelCropGarlicElephant" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -566,7 +605,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Garlic - Elephant :"
 
-[node name="TValueCropGarlicElephant" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant/HBoxContainer"]
+[node name="TValueCropGarlicElephant" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -577,12 +616,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="Lettuce" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="Lettuce" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -590,7 +629,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropLettuce" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce/HBoxContainer"]
+[node name="LabelCropLettuce" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -599,7 +638,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Lettuce : "
 
-[node name="TValueCropLettuce" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce/HBoxContainer"]
+[node name="TValueCropLettuce" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -610,12 +649,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="MustardMizuna" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="MustardMizuna" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -623,7 +662,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropMustardMizuna" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna/HBoxContainer"]
+[node name="LabelCropMustardMizuna" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -632,7 +671,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Mustard - Mizuna : "
 
-[node name="TValueCropMustardMizuna" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna/HBoxContainer"]
+[node name="TValueCropMustardMizuna" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -643,12 +682,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="MustardPizzo" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="MustardPizzo" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -656,7 +695,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropMustardPizzo" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo/HBoxContainer"]
+[node name="LabelCropMustardPizzo" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -665,7 +704,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Mustard - Pizzo : "
 
-[node name="TValueCropMustardPizzo" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo/HBoxContainer"]
+[node name="TValueCropMustardPizzo" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -676,12 +715,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="Onions" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="Onions" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -689,7 +728,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropOnions" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions/HBoxContainer"]
+[node name="LabelCropOnions" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -698,7 +737,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Onions : "
 
-[node name="TValueCropOnions" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions/HBoxContainer"]
+[node name="TValueCropOnions" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -709,12 +748,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="Peppers" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="Peppers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -722,7 +761,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropPeppers" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers/HBoxContainer"]
+[node name="LabelCropPeppers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -731,7 +770,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Peppers : "
 
-[node name="TValueCropPeppers" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers/HBoxContainer"]
+[node name="TValueCropPeppers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -742,12 +781,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="Potatoes" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="Potatoes" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -755,7 +794,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropPotatoes" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes/HBoxContainer"]
+[node name="LabelCropPotatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -765,7 +804,7 @@ theme = ExtResource("5_ey4y7")
 text = "Potatoes :
 "
 
-[node name="TValueCropPotatoes" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes/HBoxContainer"]
+[node name="TValueCropPotatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -776,12 +815,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="SunFlowers" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="SunFlowers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -789,7 +828,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropSunFlowers" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers/HBoxContainer"]
+[node name="LabelCropSunFlowers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -798,7 +837,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "SunFlowers : "
 
-[node name="TValueCropSunFlowers" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers/HBoxContainer"]
+[node name="TValueCropSunFlowers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -809,12 +848,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="Tomatoes" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="Tomatoes" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -822,7 +861,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropTomatoes" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes/HBoxContainer"]
+[node name="LabelCropTomatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -831,7 +870,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Tomatoes : "
 
-[node name="TValueCropTomatoes" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes/HBoxContainer"]
+[node name="TValueCropTomatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -842,12 +881,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="WheatApogey" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="WheatApogey" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -855,7 +894,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropWheatApogey" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey/HBoxContainer"]
+[node name="LabelCropWheatApogey" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -864,7 +903,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Wheat - Apogey : "
 
-[node name="TValueCropWheatApogey" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey/HBoxContainer"]
+[node name="TValueCropWheatApogey" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -875,12 +914,12 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="WheatSuperDwarf" type="Control" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="WheatSuperDwarf" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -888,7 +927,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropWheatSuperDwarf" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf/HBoxContainer"]
+[node name="LabelCropWheatSuperDwarf" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 30)
 layout_mode = 2
@@ -897,7 +936,7 @@ size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Wheat - Super Dwarf :"
 
-[node name="TValueCropWheatSuperDwarf" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf/HBoxContainer"]
+[node name="TValueCropWheatSuperDwarf" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
@@ -908,24 +947,24 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Screen/Stats Interface"]
-modulate = Color(0.713726, 0.192157, 0.0392157, 0.54902)
+[node name="GPUParticles2D" type="GPUParticles2D" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer"]
+modulate = Color(0.713726, 0.192157, 0.0392157, 0.392157)
 z_index = 2
 scale = Vector2(4.91318, 10.046)
 amount = 2000
 process_material = SubResource("ParticleProcessMaterial_g41t6")
 texture = ExtResource("6_ap5ih")
 
-[node name="OrbitDisplay" type="VSplitContainer" parent="Screen"]
-custom_minimum_size = Vector2(800, 0)
+[node name="OrbitDisplay" type="VSplitContainer" parent="VBoxContainer/Screen"]
+custom_minimum_size = Vector2(760, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="3D" type="Control" parent="Screen/OrbitDisplay"]
+[node name="3D" type="Control" parent="VBoxContainer/Screen/OrbitDisplay"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="Screen/OrbitDisplay/3D"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/OrbitDisplay/3D"]
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
@@ -935,17 +974,17 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="Screen/OrbitDisplay/3D/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/OrbitDisplay/3D/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(802, 868)
+size = Vector2i(786, 858)
 render_target_update_mode = 4
 
-[node name="Space" parent="Screen/OrbitDisplay/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]
+[node name="Space" parent="VBoxContainer/Screen/OrbitDisplay/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]
 unique_name_in_owner = true
 space_donut = ExtResource("2_3n4wt")
 player_indicator_res = ExtResource("2_4yysp")
 
-[node name="Control" type="Control" parent="Screen/OrbitDisplay/3D"]
+[node name="Control" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/3D"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -953,13 +992,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TargetLabelAvatarLocationPointer" type="Control" parent="Screen/OrbitDisplay/3D/Control" groups=["UILabelOrbitCamAvatarLocation"]]
+[node name="TargetLabelAvatarLocationPointer" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/3D/Control" groups=["UILabelOrbitCamAvatarLocation"]]
 unique_name_in_owner = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="LabelAvatarLocation" type="RichTextLabel" parent="Screen/OrbitDisplay/3D/Control" groups=["UILabelOrbitCamAvatarLocation"]]
+[node name="LabelAvatarLocation" type="RichTextLabel" parent="VBoxContainer/Screen/OrbitDisplay/3D/Control" groups=["UILabelOrbitCamAvatarLocation"]]
 z_index = 1
 custom_minimum_size = Vector2(280, 40)
 layout_mode = 2
@@ -976,7 +1015,7 @@ grow_vertical = 0
 theme = ExtResource("5_ey4y7")
 text = "Avatar Location"
 
-[node name="LabelAvatarLocationLine" type="Line2D" parent="Screen/OrbitDisplay/3D/Control"]
+[node name="LabelAvatarLocationLine" type="Line2D" parent="VBoxContainer/Screen/OrbitDisplay/3D/Control"]
 unique_name_in_owner = true
 visible = false
 z_index = 1
@@ -984,52 +1023,74 @@ position = Vector2(-2, 6)
 points = PackedVector2Array(709, 564, 661, 544)
 width = 0.75
 
-[node name="UI Subpanel" type="Control" parent="Screen/OrbitDisplay"]
+[node name="UI Subpanel" type="Control" parent="VBoxContainer/Screen/OrbitDisplay"]
+clip_contents = true
 custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="Screen/OrbitDisplay/UI Subpanel"]
-modulate = Color(0.0211585, 0.176277, 0.23483, 1)
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/VBoxContainer"]
+modulate = Color(0.158148, 0.0639987, 0, 1)
 z_index = 2
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/VBoxContainer/ColorRect"]
+modulate = Color(0.713726, 0.192157, 0.0392157, 0.392157)
+z_index = 2
+scale = Vector2(4.91318, 10.046)
+amount = 2000
+process_material = SubResource("ParticleProcessMaterial_g41t6")
+texture = ExtResource("6_ap5ih")
+
+[node name="Spacer" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 2
+
+[node name="OrbitSliderContainer" type="HBoxContainer" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel"]
+layout_mode = 2
+offset_right = 786.0
+offset_bottom = 110.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 
-[node name="OrbitSliderContainer" type="HBoxContainer" parent="Screen/OrbitDisplay/UI Subpanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Spacer2" type="Control" parent="Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
+[node name="Spacer2" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
 custom_minimum_size = Vector2(5, 0)
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
 z_index = 2
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme = ExtResource("5_ey4y7")
-theme_override_colors/default_color = Color(0.28358, 0.662783, 0.614594, 1)
 text = "Orbit
 CTRL"
 
-[node name="OrbitSlider" type="HSlider" parent="Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
+[node name="OrbitSlider" type="HSlider" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
 unique_name_in_owner = true
 z_index = 2
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
 max_value = 360.0
 
-[node name="Spacer" type="Control" parent="Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
+[node name="Spacer" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel/OrbitSliderContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[connection signal="current_camera_zoom" from="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
-[connection signal="value_changed" from="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport/DonutInteriorMap" method="_update_player_camera_zoom"]
+[node name="spacer" type="Control" parent="VBoxContainer/Screen"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 2
+
+[connection signal="current_camera_zoom" from="VBoxContainer/Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
+[connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport/DonutInteriorMap" method="_update_player_camera_zoom"]

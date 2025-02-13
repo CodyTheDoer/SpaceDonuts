@@ -10,11 +10,11 @@ outer_radius = 1.25
 inner_radius = 1.2
 outer_radius = 1.25
 
-[node name="LocationIndicator" type="Node3D" groups=["Camera3DOrbit"]]
+[node name="LocationIndicator" type="Node3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 script = ExtResource("1_y13e4")
 
-[node name="Node3DRotation" type="Node3D" parent="." groups=["Camera3DOrbit"]]
+[node name="Node3DRotation" type="Node3D" parent="."]
 
 [node name="LocationLightInner" type="OmniLight3D" parent="Node3DRotation" groups=["PlayerLocationLightIndicator"]]
 unique_name_in_owner = true
