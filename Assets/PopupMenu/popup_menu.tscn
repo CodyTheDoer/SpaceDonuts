@@ -8,7 +8,7 @@
 [node name="popup_action_menu" type="Node2D"]
 script = ExtResource("1_2udcn")
 popup_soil_options_labels = ExtResource("2_iopuv")
-color = Color(0.588752, 0.424677, 0.65078, 1)
+color = Color(0.588235, 0.423529, 0.65098, 0.588235)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

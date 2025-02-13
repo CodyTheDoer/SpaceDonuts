@@ -20,6 +20,7 @@ var _time : float = 0
 var _popup_arc_width : float = 30
 var _min_width : float = 30
 var _max_width : float = 40
+var target: float
 
 func _ready() -> void:
 	if options_array.is_empty():
@@ -72,7 +73,7 @@ func update_rotate_labels():
 		var additional_rotation_ammount: int = 360 / segments / 2
 		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
 	if segments == 7:
-		var additional_rotation_ammount: int = 360 / segments / 2 + 22.5
+		var additional_rotation_ammount: int = 360 / segments / 2 + 15
 		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
 	if segments >= 8:
 		var additional_rotation_ammount: int = 360 / segments / 2 + 22.5
@@ -104,10 +105,10 @@ func draw_label(p1: Vector2, label: String):
 		new_label.position = p1 - Vector2(-10, 10)
 	if segments == 7:
 		new_label.rotation = -2.25
-		new_label.position = p1 - Vector2(-25, 5)
+		new_label.position = p1 - Vector2(-35, -10)
 	if segments >= 8:
 		new_label.rotation = -2.25
-		new_label.position = p1 - Vector2(-25, 15)
+		new_label.position = p1 - Vector2(-25, -15)
 	
 	rotate_labels.add_child(new_label)  
 
@@ -115,7 +116,6 @@ func track_selection_direction():
 	var just_pressed_space = Input.is_action_just_pressed("space")
 	var pressed_space = Input.is_action_pressed("space")
 	var released_space = Input.is_action_just_released("space")
-	var target: float
 	if just_pressed_space:
 		starting_point = get_global_mouse_position()
 		#print(starting_point)

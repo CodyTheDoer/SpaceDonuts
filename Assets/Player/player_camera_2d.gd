@@ -1,7 +1,7 @@
 extends Camera2D
 
 @onready var player: Player = %Player
-@onready var donut_interior_map: Node2D = $".."
+@onready var donut_interior_map: Control = $".."
 
 func _process(_delta: float) -> void:
 	position = player.position

@@ -10,12 +10,6 @@ extends Node2D
 func _draw():
 	draw_segments()
 
-func wrap360plus(original_angle: float, difference: int):
-	var new_angle = original_angle + difference
-	if new_angle > 360:
-		new_angle - 360
-	return new_angle
-
 func draw_segments():
 	if segments <= 0:
 		return  # Avoid division by zero
@@ -26,11 +20,6 @@ func draw_segments():
 		var segment_start_angle = ((single_segment_angle + segment_gap) * segment) + (segment_gap / 2)
 		var segment_end_angle = segment_start_angle + single_segment_angle
 		var label_center_angle = (segment_start_angle + segment_end_angle) / 2
-		#print(segment_start_angle, ", ", segment_end_angle, ", ", label_center_angle)
-		
-		segment_start_angle = wrap360plus(segment_start_angle, 0)
-		label_center_angle = wrap360plus(label_center_angle, 0)
-		segment_end_angle = wrap360plus(segment_end_angle, 0)
 		
 		# Convert angles to radians for calculations
 		var start_x = distance_from_center * cos(deg_to_rad(segment_start_angle))
@@ -44,14 +33,6 @@ func draw_segments():
 
 		# Call the draw functions
 		draw_arc_segment(p1, p2)
-
-func draw_label(p1: Vector2, label: String):
-	var new_label: Label = Label.new()
-	new_label.text = label
-	new_label.theme = load("res://Assets/Fonts/std_theme.tres") 
-	new_label.position = p1
-	new_label.set_anchors_preset(Control.PRESET_CENTER)
-	add_child(new_label)  
 
 func draw_arc_segment(p1: Vector2, p2: Vector2):
 	var center: Vector2 = Vector2.ZERO  # Drawing from (0,0)

@@ -1,12 +1,15 @@
-extends Node2D
+extends Control
 
 @onready var popup_action_menu: Node2D = $popup_action_menu
 @onready var target_area_map_layer: TileMapLayer = $TargetAreaMapLayer
 @onready var remove_area_map_layer: TileMapLayer = $RemoveAreaMapLayer
+@onready var staged_area_map_layer: TileMapLayer = $StagedAreaMapLayer
 @onready var wip_area_map_layer: TileMapLayer = $WIPAreaMapLayer
 @onready var tilemap: TileMapLayer = %DonutTileMapLayer
 @onready var player: Player = %Player
-@onready var camera_2d: Camera2D = %Camera2D2
+@onready var camera_2d: Camera2D = %Camera2D
+@onready var plots_count: RichTextLabel = %PlotsCount
+@onready var updates_queued: RichTextLabel = %UpdatesQueued
 
 @export var ring_world: SpaceDonut
 @export var player_coords: Vector2i
@@ -16,10 +19,13 @@ extends Node2D
 signal current_camera_zoom(camera_zoom: float)
 
 var active_tile_map: Array[Array] = []
-var ring_world_reference_map: Array[Array] = []
-var player_interface_map: Array[Array] = []
-var player_interface_mapped_targets = []
+@export var ring_world_reference_map: Array[Array] = []
+@export var player_interface_mapped_targets = []
 var remove_interface_mapped_targets = []
+@export var currently_tiling: bool = false
+@export var tile_queue = []
+@export var previous_tile_queue_size: int = 0
+var clean_target_count = 0
 
 var player_tile_pos: Vector2i
 var tile_size: int = 32
@@ -27,6 +33,8 @@ var world_x_max: int
 var world_y_max: int
 var display_radius: int = 25
 
+var left_click_pressed: bool = false
+var right_click_pressed: bool = false
 var original_left_click_position: Vector2
 var original_right_click_position: Vector2
 var hover_left_click_position: Vector2
@@ -36,22 +44,43 @@ var starting_point: Vector2
 
 var popup_target: int
 
+# // --- potential_matches & tile_atlas_paths --- // 
+# // --- These need to be updated together --- // 
+var potential_matches = {
+	"DIRT": 0,
+	"FLOWERS": 1,
+	"GRASS": 2,
+	"ROCKY": 3,
+	"TILLED": 4,
+}
+
+# // --- These need to be updated together --- // 
+var tile_atlas_paths = {
+	0 : Vector2i(0, 0),
+	1 : Vector2i(2, 0),
+	2 : Vector2i(3, 0),
+	3 : Vector2i(4, 0),
+	4 : Vector2i(1, 0),
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	set_ring_world_x_and_y()
 	build_ringworld_map()
 	init_active_tile_map()
-	init_player_interface_map()
+	#init_player_interface_map()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	current_camera_zoom.emit(camera_zoom)
 	update_player_tile_pos()
 	display_tiles_in_radius()
-	montor_and_move_player_when_crossing_y_bounds()
+	monitor_and_move_player_when_crossing_y_bounds()
+	monitor_and_stop_player_when_crossing_x_bounds()
 	update_export_player_coords()
-	monitor_player_click_and_drag_for_target_area()
+	#monitor_player_click_and_drag_for_target_area()
 	world_options_popup_menu()
+	monitor_tile_queue()
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -61,6 +90,54 @@ func _input(event):
 		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			if Vector2(camera_zoom, camera_zoom) > Vector2(1, 1):
 				camera_zoom -= 0.035
+
+func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.keycode == KEY_ESCAPE:
+			get_tree().quit()
+
+func _gui_input(event):
+	if event is InputEventMouseButton:
+		if Input.is_action_just_pressed("right_click"):
+			print("Input.is_action_just_pressed('right_click')")
+			original_right_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
+			remove_area_map_layer.set_cell(original_right_click_position, 0, Vector2(3, 0))
+		if Input.is_action_pressed("right_click"):
+			print("Input.is_action_pressed('right_click')")
+			right_click_pressed = true
+		if Input.is_action_just_released("right_click"):
+			print("Input.is_action_just_released('right_click')")
+			right_click_pressed = false
+			if !left_click_pressed:
+				print("!Input.is_action_pressed('left_click')")
+				remove_area_map_layer.clear()
+				remove_range_from_player_interface_map(original_right_click_position, hover_right_click_position)
+		if Input.is_action_just_pressed("left_click"):
+			print("Input.is_action_just_pressed('left_click')")
+			original_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
+			target_area_map_layer.set_cell(original_left_click_position, 0, Vector2(3, 0))
+		if Input.is_action_pressed("left_click"):
+			print("Input.is_action_pressed('left_click')")
+			left_click_pressed = true
+		if Input.is_action_just_released("left_click"):
+			left_click_pressed = false
+			print("Input.is_action_just_released('left_click')")
+			append_range_to_player_interface_map(original_left_click_position, hover_left_click_position)
+			if both_clicked == true:
+				remove_area_map_layer.clear()
+				remove_arrays_from_player_interface_map(remove_interface_mapped_targets)
+				both_clicked = false
+			target_area_map_layer.clear()
+	if right_click_pressed:
+		hover_right_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
+		animate_target_bounds_from_og_to_hover_remove(original_right_click_position, hover_right_click_position)
+	if left_click_pressed:
+		if Input.is_action_just_released("right_click"):
+			print("Input.is_action_just_released('right_click')")
+			remove_interface_mapped_targets.append([original_right_click_position, hover_right_click_position])
+			both_clicked = true
+		hover_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
+		animate_target_bounds_from_og_to_hover_target(original_left_click_position, hover_left_click_position)
 
 # // --- _ready() --- //
 func set_ring_world_x_and_y():
@@ -79,11 +156,11 @@ func init_active_tile_map():
 		for y in range(0 , world_y_max):
 			active_tile_map[x].append(0)
 
-func init_player_interface_map():
-	for x in range(0 , world_x_max):
-		player_interface_map.append([])
-		for y in range(0 , world_y_max):
-			player_interface_map[x].append(0)
+#func init_player_interface_map():
+	#for x in range(0 , world_x_max):
+		#player_interface_map.append([])
+		#for y in range(0 , world_y_max):
+			#player_interface_map[x].append(0)
 
 # // --- _process() --- //
 func world_options_popup_menu():
@@ -106,8 +183,98 @@ func world_options_popup_menu():
 		popup_action_menu.visible = false
 	if popup_action_menu.selection_confirmed:
 		popup_action_menu.selection = popup_target
-		print("Selection Confirmed:", popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection] )
+		randomize()
+		var local_target_map = player_interface_mapped_targets.duplicate()
+		local_target_map.shuffle()
+		wip_area_map_layer.clear()
+		player_interface_mapped_targets.clear()
+		if await init_action_from_selection(
+			popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection], 
+			local_target_map,
+		) == false && popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection] != "CANCEL":
+			tile_queue.append([popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection], local_target_map])
 		popup_action_menu.selection_confirmed = false
+
+func remove_targets_outside_of_world_coords(array: Array):
+	for target in array:
+		if target.x >= world_x_max:
+			array.erase(target)
+		if target.y > world_y_max:
+			array.erase(target)
+	return array
+
+func init_action_from_selection(selection: String, target_array: Array):
+	print(selection, ", currently_tiling: ", currently_tiling)
+	var clean_target_array = remove_targets_outside_of_world_coords(target_array.duplicate())
+	wip_area_map_layer.set_cells_terrain_connect(clean_target_array, 0, 0, true)
+	if currently_tiling:
+		return false
+	if !currently_tiling:
+		currently_tiling = true
+		match selection:
+			"CANCEL":
+				pass
+			"TILL":
+				for target in clean_target_array:
+					await get_tree().create_timer(0.00125).timeout 
+					update_tile_to(target, "TILLED")
+					clean_target_count += 1
+					if plots_count != null:
+						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
+			"GRASS":
+				for target in clean_target_array:
+					await get_tree().create_timer(0.00125).timeout 
+					update_tile_to(target, "GRASS")
+					clean_target_count += 1
+					if plots_count != null:
+						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
+			"DIRT":
+				for target in clean_target_array:
+					await get_tree().create_timer(0.00125).timeout 
+					update_tile_to(target, "DIRT")
+					clean_target_count += 1
+					if plots_count != null:
+						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
+			"FLOWERS":
+				for target in clean_target_array:
+					await get_tree().create_timer(0.00125).timeout 
+					update_tile_to(target, "FLOWERS")
+					clean_target_count += 1
+					if plots_count != null:
+						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
+			"ROCK":
+				for target in clean_target_array:
+					await get_tree().create_timer(0.00125).timeout 
+					update_tile_to(target, "ROCKY")
+					clean_target_count += 1
+					if plots_count != null:
+						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
+		currently_tiling = false
+		wip_area_map_layer.clear()
+		clean_target_count = 0
+		if plots_count != null:
+			plots_count.text = "Ready..."
+		return true
+
+func monitor_tile_queue():
+	if len(tile_queue) != previous_tile_queue_size:
+		if updates_queued != null:
+			updates_queued.text = str(len(tile_queue))
+		previous_tile_queue_size = len(tile_queue)
+		staged_area_map_layer.clear()
+		for tileset in tile_queue:
+			staged_area_map_layer.set_cells_terrain_connect(tileset[1], 0, 0, false)
+	
+	if len(tile_queue) > 0 && currently_tiling == false:
+		await init_action_from_selection(tile_queue[0][0], tile_queue[0][1])
+		tile_queue.remove_at(0)
+
+func update_tile_to(location: Vector2i, new_tile: String):
+	if location.x >= world_x_max:
+		return
+	if location.y > world_y_max:
+		return
+	ring_world_reference_map[location.x][location.y] = tile_atlas_paths[potential_matches[new_tile]]
 
 func update_player_tile_pos():
 	var player_in_block = Vector2(player.position.x / tile_size as int, player.position.y / tile_size as int)
@@ -141,51 +308,20 @@ func display_tiles_in_radius():
 		tilemap.set_cell(target, -1)
 		active_tile_map[target.x][target.y] = 0
 
-func montor_and_move_player_when_crossing_y_bounds():
+func monitor_and_move_player_when_crossing_y_bounds():
 	if player_tile_pos.y > world_y_max:
 		player.position.y = 0
 	if player_tile_pos.y < 0:
 		player.position.y = world_y_max * 32
-	
+
+func monitor_and_stop_player_when_crossing_x_bounds():
+	if player_tile_pos.x > world_x_max - 1:
+		player.position.x = world_x_max * 32
+	if player_tile_pos.x < 1:
+		player.position.x = 1 * 32
+
 func update_export_player_coords():
 	player_coords = player.position
-
-func monitor_player_click_and_drag_for_target_area():
-	var input_right_click = Input.is_action_just_pressed("right_click")
-	var input_left_click = Input.is_action_just_pressed("left_click")
-	
-	var pressed_right_click = Input.is_action_pressed("right_click")
-	var pressed_left_click = Input.is_action_pressed("left_click")
-	
-	var release_right_click = Input.is_action_just_released("right_click")
-	var release_left_click = Input.is_action_just_released("left_click")
-	
-	if input_right_click:
-		original_right_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
-		remove_area_map_layer.set_cell(original_right_click_position, 0, Vector2(3, 0))
-	if pressed_right_click:
-		hover_right_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
-		animate_target_bounds_from_og_to_hover_remove(original_right_click_position, hover_right_click_position)
-	if release_right_click and !pressed_left_click:
-		remove_area_map_layer.clear()
-		remove_range_from_player_interface_map(original_right_click_position, hover_right_click_position)
-	
-	if input_left_click:
-		original_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
-		target_area_map_layer.set_cell(original_left_click_position, 0, Vector2(3, 0))
-	if pressed_left_click:
-		if release_right_click:
-			remove_interface_mapped_targets.append([original_right_click_position, hover_right_click_position])
-			both_clicked = true
-		hover_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
-		animate_target_bounds_from_og_to_hover_target(original_left_click_position, hover_left_click_position)
-	if release_left_click:
-		append_range_to_player_interface_map(original_left_click_position, hover_left_click_position)
-		if both_clicked == true:
-			remove_area_map_layer.clear()
-			remove_arrays_from_player_interface_map(remove_interface_mapped_targets)
-			both_clicked = false
-		target_area_map_layer.clear()
 
 func remove_arrays_from_player_interface_map(array: Array):
 	for target in array:
@@ -196,6 +332,8 @@ func remove_arrays_from_player_interface_map(array: Array):
 
 func animate_target_bounds_from_og_to_hover_target(p1: Vector2, p2: Vector2):
 	var difference = p1 - p2
+	if difference.x * difference.y > 15625 or difference.x * difference.y < -15625:
+		return
 	target_area_map_layer.clear()
 	
 	# No movement, Original position

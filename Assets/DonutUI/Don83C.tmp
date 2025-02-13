@@ -1,28 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvocp7ql0dy4g"]
+[gd_scene load_steps=8 format=3 uid="uid://dvocp7ql0dy4g"]
 
 [ext_resource type="Script" path="res://Assets/DonutUI/donut_ui.gd" id="1_6ajj8"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOne.tres" id="2_3n4wt"]
 [ext_resource type="Resource" uid="uid://bfqo8fosnmwt5" path="res://Assets/3DLocationIndicator/Player_Position_Indicator.tres" id="2_4yysp"]
 [ext_resource type="PackedScene" uid="uid://bwh3ydq45bsue" path="res://Assets/Donut/donut_interior_map.tscn" id="3_1sr3o"]
+[ext_resource type="Script" path="res://Assets/DonutUI/2d_map_sub_viewport.gd" id="4_liffj"]
 [ext_resource type="PackedScene" uid="uid://bgl448k3tm2r" path="res://Assets/Space/space.tscn" id="4_xxg0w"]
 [ext_resource type="Theme" uid="uid://dlqvcrl07vw47" path="res://Assets/Fonts/std_theme.tres" id="5_ey4y7"]
-[ext_resource type="Shader" path="res://Assets/shaders/DonutUi_ColorRect_BG.gdshader" id="5_tk4qq"]
-[ext_resource type="Texture2D" uid="uid://cfl3pt8ght0fg" path="res://Assets/Textures/popup menu/bg1.png" id="6_ap5ih"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wnl2t"]
-shader = ExtResource("5_tk4qq")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g41t6"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(100, 100, 1)
-gravity = Vector3(4000, 0, 0)
-scale_min = 0.01
-scale_max = 0.06
-anim_speed_min = 16.0
-anim_speed_max = 16.0
-
-[node name="DonutUI" type="CanvasLayer" groups=["Persist"]]
+[node name="DonutUI" type="CanvasLayer"]
 script = ExtResource("1_6ajj8")
 space_donut = ExtResource("2_3n4wt")
 player_indicator_res = ExtResource("2_4yysp")
@@ -67,23 +53,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="2DMapViewportContainer" type="SubViewportContainer" parent="Screen/TopDownMap/YIndicator and Map/MapInterface"]
-unique_name_in_owner = true
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Screen/TopDownMap/YIndicator and Map/MapInterface"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-focus_mode = 0
 stretch = true
 
-[node name="2DMapViewport" type="SubViewport" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(600, 980)
 render_target_update_mode = 4
+script = ExtResource("4_liffj")
 
-[node name="DonutInteriorMap" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport" instance=ExtResource("3_1sr3o")]
+[node name="DonutInteriorMap" parent="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport" instance=ExtResource("3_1sr3o")]
 unique_name_in_owner = true
 
 [node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="Screen/TopDownMap"]
@@ -104,9 +89,8 @@ custom_minimum_size = Vector2(490, 0)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Screen/Stats Interface"]
-modulate = Color(0.333155, 0.165922, 0.0183862, 1)
+modulate = Color(0.7239, 0.390137, 0.0902381, 1)
 z_index = 2
-material = SubResource("ShaderMaterial_wnl2t")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -164,7 +148,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = ExtResource("5_ey4y7")
 
 [node name="Label2DCameraZoom" type="RichTextLabel" parent="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer"]
 z_index = 2
@@ -908,14 +891,6 @@ theme = ExtResource("5_ey4y7")
 text = "count"
 text_direction = 2
 
-[node name="GPUParticles2D" type="GPUParticles2D" parent="Screen/Stats Interface"]
-modulate = Color(0.713726, 0.192157, 0.0392157, 0.54902)
-z_index = 2
-scale = Vector2(4.91318, 10.046)
-amount = 2000
-process_material = SubResource("ParticleProcessMaterial_g41t6")
-texture = ExtResource("6_ap5ih")
-
 [node name="OrbitDisplay" type="VSplitContainer" parent="Screen"]
 custom_minimum_size = Vector2(800, 0)
 layout_mode = 2
@@ -989,7 +964,7 @@ custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
 [node name="ColorRect" type="ColorRect" parent="Screen/OrbitDisplay/UI Subpanel"]
-modulate = Color(0.0211585, 0.176277, 0.23483, 1)
+modulate = Color(0.0799769, 0.373312, 0.481741, 1)
 z_index = 2
 layout_mode = 1
 anchors_preset = 15
@@ -1015,7 +990,6 @@ z_index = 2
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 theme = ExtResource("5_ey4y7")
-theme_override_colors/default_color = Color(0.28358, 0.662783, 0.614594, 1)
 text = "Orbit
 CTRL"
 
@@ -1031,5 +1005,5 @@ max_value = 360.0
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[connection signal="current_camera_zoom" from="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
-[connection signal="value_changed" from="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="Screen/TopDownMap/YIndicator and Map/MapInterface/2DMapViewportContainer/2DMapViewport/DonutInteriorMap" method="_update_player_camera_zoom"]
+[connection signal="current_camera_zoom" from="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
+[connection signal="value_changed" from="Screen/Stats Interface/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="Screen/TopDownMap/YIndicator and Map/MapInterface/SubViewportContainer/SubViewport/DonutInteriorMap" method="_update_player_camera_zoom"]

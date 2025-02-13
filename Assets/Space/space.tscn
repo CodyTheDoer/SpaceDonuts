@@ -56,7 +56,7 @@ inner_radius = 0.95
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x6doh"]
 noise_type = 5
-frequency = 0.0172
+frequency = 0.0227
 fractal_type = 3
 fractal_octaves = 3
 fractal_lacunarity = 1.12

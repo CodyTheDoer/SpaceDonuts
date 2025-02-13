@@ -45,10 +45,10 @@ func build_if_new():
 			var texture_float: float = world_noise.get_noise_2d(x, y)
 			# Use noise value to set appropriate tile
 			if texture_float > 0.75:
-				tile_map[x].append(tile_atlas_paths[GRASS])
+				tile_map[x].append(tile_atlas_paths[ROCKY])
 			elif texture_float > 0.50:
 				tile_map[x].append(tile_atlas_paths[DIRT])
 			elif texture_float > 0.25:
-				tile_map[x].append(tile_atlas_paths[ROCKY])
+				tile_map[x].append(tile_atlas_paths[GRASS])
 			else:
 				tile_map[x].append(tile_atlas_paths[FLOWERS])

@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4p3jco5k1mht"]
+
+[ext_resource type="Theme" uid="uid://dlqvcrl07vw47" path="res://Assets/Fonts/std_theme.tres" id="1_frgnt"]
+
+[node name="EscapeMenu" type="PopupMenu"]
+transparent_bg = true
+size = Vector2i(700, 450)
+visible = true
+unfocusable = true
+theme = ExtResource("1_frgnt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(20, 50)
+layout_mode = 2
+color = Color(1, 0.0313726, 0, 0.117647)
+
+[node name="Exit" type="Button" parent="Control/VBoxContainer/ColorRect"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -15.5
+offset_bottom = 15.5
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 8
+text = " x "
+icon_alignment = 1
+
+[node name="Spacers 1" type="Control" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+
+[node name="Save" type="Button" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(360, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Save"
+
+[node name="Load" type="Button" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(360, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Load"
+
+[node name="Sound" type="Button" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(360, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Sound"
+
+[node name="Exit" type="Button" parent="Control/VBoxContainer"]
+custom_minimum_size = Vector2(360, 60)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Exit"
