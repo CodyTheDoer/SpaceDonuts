@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0qtadm2u6mqt"]
+
+[ext_resource type="Script" path="res://Assets/PopupMenu/Exterior/popup_menu_exterior.gd" id="1_etp4e"]
+[ext_resource type="Texture2D" uid="uid://cfl3pt8ght0fg" path="res://Assets/Textures/popup menu/bg1.png" id="2_3bilh"]
+[ext_resource type="Script" path="res://Assets/PopupMenu/rotate_radial.gd" id="3_jcv4g"]
+
+[node name="popup_menu_exterior" type="Node2D"]
+script = ExtResource("1_etp4e")
+color = Color(0.588235, 0.423529, 0.65098, 0.588235)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.686275)
+texture = ExtResource("2_3bilh")
+
+[node name="rotate_radial" type="Node2D" parent="."]
+rotation = -3.14159
+script = ExtResource("3_jcv4g")
+
+[node name="rotate_labels" type="Node2D" parent="."]
+rotation = 1.57079

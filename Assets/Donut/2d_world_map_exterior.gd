@@ -1,5 +1,8 @@
 extends Control
 
+const INTERIOR = 0
+const EXTERIOR = 1
+
 @onready var popup_action_menu: Node2D = $popup_action_menu
 @onready var target_area_map_layer: TileMapLayer = $TargetAreaMapLayer
 @onready var remove_area_map_layer: TileMapLayer = $RemoveAreaMapLayer
@@ -11,7 +14,8 @@ extends Control
 @onready var plots_count: RichTextLabel = %PlotsCount
 @onready var updates_queued: RichTextLabel = %UpdatesQueued
 
-@export var ring_world: SpaceDonut
+@export var ring_world: SpaceDonutInterior
+
 @export var player_coords: Vector2i
 @export var camera_zoom: float = 1
 @export var popup_options_labels: Resource
@@ -47,11 +51,11 @@ var popup_target: int
 # // --- potential_matches & tile_atlas_paths --- // 
 # // --- These need to be updated together --- // 
 var potential_matches = {
-	"DIRT": 0,
-	"FLOWERS": 1,
-	"GRASS": 2,
-	"ROCKY": 3,
-	"TILLED": 4,
+	"STEEL1": 0,
+	"STEEL2": 1,
+	"STEEL3": 2,
+	"STEEL4": 3,
+	"STEEL5": 4,
 }
 
 # // --- These need to be updated together ^^^ --- // 
@@ -181,10 +185,10 @@ func world_options_popup_menu():
 		wip_area_map_layer.clear()
 		player_interface_mapped_targets.clear()
 		if await init_action_from_selection(
-			popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection], 
+			popup_action_menu.get_label_array()[popup_action_menu.selection], 
 			local_target_map,
-		) == false && popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection] != "CANCEL":
-			tile_queue.append([popup_action_menu.popup_soil_options_labels.get_label_array()[popup_action_menu.selection], local_target_map])
+		) == false && popup_action_menu.get_label_array()[popup_action_menu.selection] != "CANCEL":
+			tile_queue.append([popup_action_menu.get_label_array()[popup_action_menu.selection], local_target_map])
 		popup_action_menu.selection_confirmed = false
 
 func remove_targets_outside_of_world_coords(array: Array):
@@ -206,38 +210,38 @@ func init_action_from_selection(selection: String, target_array: Array):
 		match selection:
 			"CANCEL":
 				pass
-			"TILL":
+			"STEEL1":
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
-					update_tile_to(target, "TILLED")
+					update_tile_to(target, "STEEL1")
 					clean_target_count += 1
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
-			"GRASS":
+			"STEEL2":
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
-					update_tile_to(target, "GRASS")
+					update_tile_to(target, "STEEL2")
 					clean_target_count += 1
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
-			"DIRT":
+			"STEEL3":
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
-					update_tile_to(target, "DIRT")
+					update_tile_to(target, "STEEL3")
 					clean_target_count += 1
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
-			"FLOWERS":
+			"STEEL4":
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
-					update_tile_to(target, "FLOWERS")
+					update_tile_to(target, "STEEL4")
 					clean_target_count += 1
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
-			"ROCK":
+			"STEEL5":
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
-					update_tile_to(target, "ROCKY")
+					update_tile_to(target, "STEEL5")
 					clean_target_count += 1
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
@@ -284,7 +288,7 @@ func display_tiles_in_radius():
 	for tile in display_tiles:
 		if tile.x > 0 and tile.y > 0:
 			if tile.x < world_x_max and tile.y < world_y_max:
-				tilemap.set_cell(tile, 1, ring_world_reference_map[tile.x][tile.y])
+				tilemap.set_cell(tile, 2, ring_world_reference_map[tile.x][tile.y])
 				active_tile_map[tile.x][tile.y] = 1
 	# Prep to depopulate the tiles that aren't within the radius.
 	var remove_tiles = []

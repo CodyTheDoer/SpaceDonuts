@@ -1,4 +1,4 @@
-class_name SpaceDonut
+class_name SpaceDonutInterior
 extends Resource
 
 @export var world_name: String

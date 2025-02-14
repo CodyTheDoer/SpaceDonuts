@@ -1,6 +1,7 @@
 extends Node3D
 
-@export var space_donut: SpaceDonut
+@export var space_donut: SpaceDonutInterior
+
 @export var player_indicator_res: SpaceDonut3DLocationIndicator
 
 @onready var donut_interior_map = %DonutInteriorMap

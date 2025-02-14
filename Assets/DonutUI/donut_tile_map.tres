@@ -1,9 +1,10 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://b0o58eyb2u6dh"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://b0o58eyb2u6dh"]
 
 [ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArraySoil.png" id="1_nej83"]
+[ext_resource type="Texture2D" uid="uid://dfffx70ifs4cn" path="res://Assets/Textures/TextureArrayMetal.png" id="2_bkhsm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13rvr"]
-resource_name = "80"
+resource_name = "Soil"
 texture = ExtResource("1_nej83")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
@@ -66,9 +67,20 @@ texture_region_size = Vector2i(32, 32)
 4:0/0/terrains_peering_bit/top_side = 0
 4:0/0/terrains_peering_bit/top_right_corner = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x6y4g"]
+resource_name = "Metal"
+texture = ExtResource("2_bkhsm")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+
 [resource]
 tile_size = Vector2i(32, 32)
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Donut"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+sources/2 = SubResource("TileSetAtlasSource_x6y4g")
 sources/1 = SubResource("TileSetAtlasSource_13rvr")

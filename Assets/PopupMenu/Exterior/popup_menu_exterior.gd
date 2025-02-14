@@ -3,7 +3,6 @@ extends Node2D
 @onready var rotate_radial: Node2D = $rotate_radial
 @onready var rotate_labels: Node2D = $rotate_labels
 
-@export var popup_soil_options_labels: SoilInteractionLabels
 @export var options_array: Array
 @export var antialiasing: bool = false
 @export var distance_from_center: int = 120
@@ -22,9 +21,36 @@ var _min_width : float = 30
 var _max_width : float = 40
 var target: float
 
+const CANCEL = 0
+const STEEL1 = 1
+const STEEL2 = 2
+const STEEL3 = 3
+const STEEL4 = 4
+const STEEL5 = 5
+
+var label = {
+	0: "CANCEL",
+	1: "STEEL1",
+	2: "STEEL2",
+	3: "STEEL3",
+	4: "STEEL4",
+	5: "STEEL5",
+}
+
+func get_label_array():
+	var label_array = [
+		label[CANCEL],
+		label[STEEL1],
+		label[STEEL2],
+		label[STEEL3],
+		label[STEEL4],
+		label[STEEL5],
+	]
+	return label_array
+
 func _ready() -> void:
 	if options_array.is_empty():
-		options_array = popup_soil_options_labels.get_label_array()
+		options_array = get_label_array()
 		#print(options_array)
 	segments = len(options_array)
 	update_rotate_labels()
@@ -33,13 +59,6 @@ func _process(delta: float) -> void:
 	update_rotate_radial()
 	track_selection_direction()
 	_time += delta
-	
-	# Animation Context:
-		#sin(_time) oscillates between -1 and 1.
-		#abs(sin(_time)) ensures it stays between 0 and 1.
-		#Multiplying by (_max_width - _min_width) scales the range to 0 to the width difference.
-		#Adding _min_width shifts the range to [min_width, max_width].
-		#clamp(value, min, max) ensures no overshooting occurs.
 
 	_popup_arc_width = clamp(abs(sin(_time)) * (_max_width - _min_width) + _min_width, _min_width, _max_width)
 	queue_redraw()
@@ -160,7 +179,7 @@ func draw_segments():
 
 		# Call the draw functions
 		draw_arc_segment(p1, p2)
-		draw_label(extended_center_angle_point, popup_soil_options_labels.get_label_array()[segment - 1])
+		draw_label(extended_center_angle_point, get_label_array()[segment - 1])
 
 func draw_arc_segment(p1: Vector2, p2: Vector2):
 	var center: Vector2 = Vector2.ZERO  # Drawing from (0,0)

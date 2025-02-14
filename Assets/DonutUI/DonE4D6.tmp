@@ -10,51 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://cfl3pt8ght0fg" path="res://Assets/Textures/popup menu/bg1.png" id="6_ap5ih"]
 [ext_resource type="PackedScene" uid="uid://b4u22yeerjrn7" path="res://Assets/DonutUI/nine_patch_rect.tscn" id="6_v25pf"]
 [ext_resource type="PackedScene" uid="uid://co5ovok2d27pr" path="res://Assets/Donut/donut_exterior_map.tscn" id="7_anjr5"]
-
-[sub_resource type="GDScript" id="GDScript_wo8td"]
-script/source = "extends Resource
-class_name InteriorInteractionLabels
-
-const CANCEL = 0
-const TILL = 1
-const GRASS = 2
-const ROCK = 3
-const DIRT = 4
-const FLOWERS = 5
-
-var label = {
-	0: \"CANCEL\",
-	1: \"TILL\",
-	2: \"GRASS\",
-	3: \"ROCK\",
-	4: \"DIRT\",
-	5: \"FLOWERS\",
-}
-
-func get_label_array():
-	var label_array = [
-		label[CANCEL],
-		label[TILL],
-		label[GRASS],
-		label[ROCK],
-		label[DIRT],
-		label[FLOWERS],
-	]
-	return label_array
-
-@export var label_array = [
-	label[CANCEL],
-	label[TILL],
-	label[GRASS],
-	label[ROCK],
-	label[DIRT],
-	label[FLOWERS],
-]
-"
-
-[sub_resource type="Resource" id="Resource_seomr"]
-script = SubResource("GDScript_wo8td")
-label_array = ["CANCEL", "DIRT", "FLOWERS", "GRASS", "ROCKY", "TILLED"]
+[ext_resource type="Resource" uid="uid://dok1pp1m55ays" path="res://Assets/DonutData/DonutOneExterior.tres" id="8_7q448"]
+[ext_resource type="Resource" uid="uid://uvloam6bxdly" path="res://Assets/PopupMenu/popup_menu_resource.tres" id="8_rim5j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wnl2t"]
 shader = ExtResource("5_tk4qq")
@@ -189,10 +146,9 @@ handle_input_locally = false
 size = Vector2i(600, 908)
 render_target_update_mode = 4
 
-[node name="DonutExteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
-unique_name_in_owner = true
-ring_world = ExtResource("2_3n4wt")
-popup_options_labels = SubResource("Resource_seomr")
+[node name="donut_exterior_map" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
+ring_world = ExtResource("8_7q448")
+popup_options_labels = ExtResource("8_rim5j")
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior" instance=ExtResource("6_v25pf")]
 layout_mode = 2

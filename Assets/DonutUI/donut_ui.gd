@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var space_donut: SpaceDonut
+@export var space_donut: SpaceDonutInterior
 @export var player_indicator_res: SpaceDonut3DLocationIndicator
 @export var current_2d_zoom: float
 @export var current_3d_rotation: int

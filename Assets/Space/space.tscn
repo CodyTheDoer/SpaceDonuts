@@ -107,7 +107,7 @@ transform = Transform3D(-0.106316, 0, 0.994332, 0, 1, 0, -0.994332, 0, -0.106316
 transform = Transform3D(12, 0, 0, 0, 80, 0, 0, 0, 12, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Camera3DOrbitControl"]
-transform = Transform3D(0.015727, -0.0748995, -0.0329723, 0.0112823, -6.61285e-10, 0.00538139, -0.0322451, -0.0365309, 0.0676032, -0.833333, 0.1, 1.33333)
+transform = Transform3D(0.015727, -0.0748995, -0.0329722, 0.0112823, 2.86923e-09, 0.0053814, -0.0322451, -0.0365309, 0.0676032, -0.660743, 0.1, 1.33333)
 environment = SubResource("Environment_0nt65")
 fov = 92.0
 script = ExtResource("3_qi5ov")

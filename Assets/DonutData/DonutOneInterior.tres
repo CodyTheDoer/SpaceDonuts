@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SpaceDonutInterior" load_steps=2 format=3 uid="uid://lem2hbcxc2oj"]
+
+[ext_resource type="Script" path="res://Assets/Donut/SpaceDonutInterior.gd" id="1_3kjc1"]
+
+[resource]
+script = ExtResource("1_3kjc1")
+world_name = "Donut One Interior"
+new_instance = true
+ring_world_x_max = 120.0
+ring_world_y_max = 800.0
+tile_map = Array[Array]([])

@@ -1,14 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://lwguu2evjanf"]
+[gd_scene load_steps=4 format=3 uid="uid://lwguu2evjanf"]
 
 [ext_resource type="Script" path="res://Assets/PopupMenu/popup_menu_interface.gd" id="1_2udcn"]
-[ext_resource type="Resource" uid="uid://uvloam6bxdly" path="res://Assets/PopupMenu/popup_menu_resource.tres" id="2_iopuv"]
 [ext_resource type="Texture2D" uid="uid://cfl3pt8ght0fg" path="res://Assets/Textures/popup menu/bg1.png" id="2_k01ix"]
 [ext_resource type="Script" path="res://Assets/PopupMenu/rotate_radial.gd" id="4_hypsl"]
 
 [node name="popup_action_menu" type="Node2D"]
 script = ExtResource("1_2udcn")
-popup_soil_options_labels = ExtResource("2_iopuv")
+popup_type = null
+options_array = null
+antialiasing = null
+distance_from_center = null
+segment_gap = null
 color = Color(0.588235, 0.423529, 0.65098, 0.588235)
+starting_point = null
+selection = null
+selection_confirmed = null
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

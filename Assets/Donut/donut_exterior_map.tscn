@@ -1,86 +1,85 @@
-[gd_scene load_steps=20 format=4 uid="uid://bwh3ydq45bsue"]
+[gd_scene load_steps=20 format=4 uid="uid://co5ovok2d27pr"]
 
-[ext_resource type="Script" path="res://Assets/Donut/2d_world_map_interior.gd" id="1_tuycd"]
-[ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOneInterior.tres" id="2_40uvj"]
-[ext_resource type="Script" path="res://Assets/Player/player_camera_2d.gd" id="3_1fihw"]
-[ext_resource type="TileSet" uid="uid://b0o58eyb2u6dh" path="res://Assets/DonutUI/donut_tile_map.tres" id="3_m7235"]
-[ext_resource type="PackedScene" uid="uid://cbchvi8c0dikm" path="res://Assets/Player/player.tscn" id="4_vynwq"]
-[ext_resource type="TileSet" uid="uid://c8rv2yhi76vb4" path="res://Assets/Textures/tset_yellow_target.tres" id="6_4yqsi"]
-[ext_resource type="TileSet" uid="uid://r3j7dfk5wlrg" path="res://Assets/Textures/tset_blue_target.tres" id="7_3o4wg"]
-[ext_resource type="PackedScene" uid="uid://lwguu2evjanf" path="res://Assets/PopupMenu/Interior/popup_menu_interior.tscn" id="9_1w1li"]
-[ext_resource type="TileSet" uid="uid://dmhf30ud0qvon" path="res://Assets/Textures/tset_red_target.tres" id="9_skh2a"]
-[ext_resource type="Texture2D" uid="uid://b55bedhaurnuy" path="res://Assets/Textures/TextureArrayBordersStagedExpanded.png" id="10_l2sb7"]
+[ext_resource type="Script" path="res://Assets/Donut/2d_world_map_exterior.gd" id="1_m2ohf"]
+[ext_resource type="Script" path="res://Assets/Player/player_camera_2d.gd" id="1_ruyln"]
+[ext_resource type="PackedScene" uid="uid://cbchvi8c0dikm" path="res://Assets/Player/player.tscn" id="2_4gaq8"]
+[ext_resource type="Resource" uid="uid://dok1pp1m55ays" path="res://Assets/DonutData/DonutOneExterior.tres" id="2_hx6um"]
+[ext_resource type="TileSet" uid="uid://b0o58eyb2u6dh" path="res://Assets/DonutUI/donut_tile_map.tres" id="3_7f3kn"]
+[ext_resource type="TileSet" uid="uid://c8rv2yhi76vb4" path="res://Assets/Textures/tset_yellow_target.tres" id="4_iyxto"]
+[ext_resource type="TileSet" uid="uid://r3j7dfk5wlrg" path="res://Assets/Textures/tset_blue_target.tres" id="5_3v2g3"]
+[ext_resource type="TileSet" uid="uid://dmhf30ud0qvon" path="res://Assets/Textures/tset_red_target.tres" id="6_gdwot"]
+[ext_resource type="Texture2D" uid="uid://b55bedhaurnuy" path="res://Assets/Textures/TextureArrayBordersStagedExpanded.png" id="7_jt573"]
+[ext_resource type="PackedScene" uid="uid://c0qtadm2u6mqt" path="res://Assets/PopupMenu/Exterior/popup_menu_exterior.tscn" id="10_syxb4"]
 
-[sub_resource type="GDScript" id="GDScript_wo8td"]
+[sub_resource type="GDScript" id="GDScript_m27oo"]
 script/source = "extends Resource
-class_name InteriorInteractionLabels
+class_name ExteriorInteractionLabels
 
 const CANCEL = 0
-const TILL = 1
-const GRASS = 2
-const ROCK = 3
-const DIRT = 4
-const FLOWERS = 5
+const STEEL1 = 1
+const STEEL2 = 2
+const STEEL3 = 3
+const STEEL4 = 4
+const STEEL5 = 5
 
 var label = {
 	0: \"CANCEL\",
-	1: \"TILL\",
-	2: \"GRASS\",
-	3: \"ROCK\",
-	4: \"DIRT\",
-	5: \"FLOWERS\",
+	1: \"STEEL1\",
+	2: \"STEEL2\",
+	3: \"STEEL3\",
+	4: \"STEEL4\",
+	5: \"STEEL5\",
 }
 
 func get_label_array():
 	var label_array = [
 		label[CANCEL],
-		label[TILL],
-		label[GRASS],
-		label[ROCK],
-		label[DIRT],
-		label[FLOWERS],
+		label[STEEL1],
+		label[STEEL2],
+		label[STEEL3],
+		label[STEEL4],
+		label[STEEL5],
 	]
-	return label_array
 
 @export var label_array = [
 	label[CANCEL],
-	label[TILL],
-	label[GRASS],
-	label[ROCK],
-	label[DIRT],
-	label[FLOWERS],
+	label[STEEL1],
+	label[STEEL2],
+	label[STEEL3],
+	label[STEEL4],
+	label[STEEL5],
 ]
 "
 
-[sub_resource type="Resource" id="Resource_seomr"]
-script = SubResource("GDScript_wo8td")
-label_array = ["CANCEL", "DIRT", "FLOWERS", "GRASS", "ROCKY", "TILLED"]
+[sub_resource type="Resource" id="Resource_50lkk"]
+script = SubResource("GDScript_m27oo")
+label_array = ["CANCEL", "METAL1", "", "", "", ""]
 
-[sub_resource type="Gradient" id="Gradient_nqgvd"]
+[sub_resource type="Gradient" id="Gradient_jgky4"]
 offsets = PackedFloat32Array(0.780769, 0.919231)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_keknd"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eip3w"]
 noise_type = 4
 frequency = 0.2745
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gho10"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3muy8"]
 width = 1920
 height = 1080
-color_ramp = SubResource("Gradient_nqgvd")
-noise = SubResource("FastNoiseLite_keknd")
+color_ramp = SubResource("Gradient_jgky4")
+noise = SubResource("FastNoiseLite_eip3w")
 
-[sub_resource type="Gradient" id="Gradient_ofl01"]
+[sub_resource type="Gradient" id="Gradient_jqqs8"]
 offsets = PackedFloat32Array(0.501558, 0.629283)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_7jqxa"]
-gradient = SubResource("Gradient_ofl01")
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_fxphp"]
+gradient = SubResource("Gradient_jqqs8")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vkubf"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5xlk"]
 resource_name = "Green"
-texture = ExtResource("10_l2sb7")
+texture = ExtResource("7_jt573")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 0:0/0/terrain_set = 0
@@ -394,23 +393,28 @@ texture_region_size = Vector2i(32, 32)
 11:0/0/terrains_peering_bit/left_side = 0
 11:0/0/terrains_peering_bit/top_side = 0
 
-[sub_resource type="TileSet" id="TileSet_ejphp"]
+[sub_resource type="TileSet" id="TileSet_3ynvb"]
 tile_size = Vector2i(32, 32)
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "GreenTarget"
 terrain_set_0/terrain_0/color = Color(0.824218, 0.577195, 0, 1)
-sources/0 = SubResource("TileSetAtlasSource_vkubf")
+sources/0 = SubResource("TileSetAtlasSource_m5xlk")
 
-[node name="donut_interior_map" type="Control"]
+[node name="donut_exterior_map" type="Control"]
 layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_tuycd")
-ring_world = ExtResource("2_40uvj")
-popup_options_labels = SubResource("Resource_seomr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m2ohf")
+ring_world = ExtResource("2_hx6um")
+player_coords = Vector2i(120, 800)
+popup_options_labels = SubResource("Resource_50lkk")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("3_1fihw")
+script = ExtResource("1_ruyln")
 
 [node name="Stars" type="TextureRect" parent="Camera2D"]
 anchors_preset = 15
@@ -418,7 +422,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("NoiseTexture2D_gho10")
+texture = SubResource("NoiseTexture2D_3muy8")
 
 [node name="CircleFade" type="TextureRect" parent="Camera2D"]
 z_index = 3
@@ -427,34 +431,34 @@ offset_top = -738.0
 offset_right = -673.0
 offset_bottom = -674.0
 scale = Vector2(23.419, 23.419)
-texture = SubResource("GradientTexture2D_7jqxa")
+texture = SubResource("GradientTexture2D_fxphp")
 
-[node name="Player" parent="." groups=["Player"] instance=ExtResource("4_vynwq")]
+[node name="Player" parent="." groups=["Player"] instance=ExtResource("2_4gaq8")]
 unique_name_in_owner = true
 position = Vector2(40, 43)
 
 [node name="DonutTileMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
-tile_set = ExtResource("3_m7235")
+tile_set = ExtResource("3_7f3kn")
 
 [node name="TargetAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
-tile_set = ExtResource("6_4yqsi")
+tile_set = ExtResource("4_iyxto")
 
 [node name="WIPAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
-tile_set = ExtResource("7_3o4wg")
+tile_set = ExtResource("5_3v2g3")
 
 [node name="RemoveAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 2
 tile_map_data = PackedByteArray("AAD4/wEAAQAAAAAAAAD5/wIAAQABAAAAAAD5/wMAAQABAAAAAGD6/wIAAQADAAAAAAD6/wMAAQADAAAAADD7/wIAAQABAAAAAFD7/wMAAQABAAAAADD8/wEAAQAEAAAAAGD9/wEAAQACAAAAAFD+/wEAAQAEAAAAAFA=")
-tile_set = ExtResource("9_skh2a")
+tile_set = ExtResource("6_gdwot")
 
 [node name="StagedAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 2
-tile_set = SubResource("TileSet_ejphp")
+tile_set = SubResource("TileSet_3ynvb")
 
-[node name="popup_action_menu" parent="." instance=ExtResource("9_1w1li")]
+[node name="popup_action_menu" parent="." instance=ExtResource("10_syxb4")]
 visible = false
 
-[connection signal="current_camera_zoom" from="." to="Camera2D" method="_set_current_camera_zoom"]
+[connection signal="current_camera_zoom" from="." to="." method="_update_player_camera_zoom"]
