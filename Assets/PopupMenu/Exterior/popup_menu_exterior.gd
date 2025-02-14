@@ -22,29 +22,29 @@ var _max_width : float = 40
 var target: float
 
 const CANCEL = 0
-const STEEL1 = 1
-const STEEL2 = 2
-const STEEL3 = 3
-const STEEL4 = 4
-const STEEL5 = 5
+const METAL1 = 1
+const METAL2 = 2
+const METAL3 = 3
+const METAL4 = 4
+const METAL5 = 5
 
 var label = {
 	0: "CANCEL",
-	1: "STEEL1",
-	2: "STEEL2",
-	3: "STEEL3",
-	4: "STEEL4",
-	5: "STEEL5",
+	1: "METAL1",
+	2: "METAL2",
+	3: "METAL3",
+	4: "METAL4",
+	5: "METAL5",
 }
 
 func get_label_array():
 	var label_array = [
 		label[CANCEL],
-		label[STEEL1],
-		label[STEEL2],
-		label[STEEL3],
-		label[STEEL4],
-		label[STEEL5],
+		label[METAL1],
+		label[METAL2],
+		label[METAL3],
+		label[METAL4],
+		label[METAL5],
 	]
 	return label_array
 

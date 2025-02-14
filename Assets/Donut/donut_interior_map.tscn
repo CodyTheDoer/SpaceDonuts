@@ -69,12 +69,12 @@ height = 1080
 color_ramp = SubResource("Gradient_nqgvd")
 noise = SubResource("FastNoiseLite_keknd")
 
-[sub_resource type="Gradient" id="Gradient_ofl01"]
+[sub_resource type="Gradient" id="Gradient_a04mg"]
 offsets = PackedFloat32Array(0.501558, 0.629283)
 colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7jqxa"]
-gradient = SubResource("Gradient_ofl01")
+gradient = SubResource("Gradient_a04mg")
 fill = 1
 fill_from = Vector2(0.5, 0.5)
 
@@ -422,10 +422,10 @@ texture = SubResource("NoiseTexture2D_gho10")
 
 [node name="CircleFade" type="TextureRect" parent="Camera2D"]
 z_index = 3
-offset_left = -737.0
-offset_top = -738.0
-offset_right = -673.0
-offset_bottom = -674.0
+offset_left = -746.0
+offset_top = -750.0
+offset_right = -682.0
+offset_bottom = -686.0
 scale = Vector2(23.419, 23.419)
 texture = SubResource("GradientTexture2D_7jqxa")
 
@@ -433,24 +433,24 @@ texture = SubResource("GradientTexture2D_7jqxa")
 unique_name_in_owner = true
 position = Vector2(40, 43)
 
-[node name="DonutTileMapLayer" type="TileMapLayer" parent="."]
+[node name="DonutInteriorTileMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
 tile_set = ExtResource("3_m7235")
 
-[node name="TargetAreaMapLayer" type="TileMapLayer" parent="."]
+[node name="InteriorTargetAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
 tile_set = ExtResource("6_4yqsi")
 
-[node name="WIPAreaMapLayer" type="TileMapLayer" parent="."]
+[node name="InteriorWIPAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
 tile_set = ExtResource("7_3o4wg")
 
-[node name="RemoveAreaMapLayer" type="TileMapLayer" parent="."]
+[node name="InteriorRemoveAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 2
 tile_map_data = PackedByteArray("AAD4/wEAAQAAAAAAAAD5/wIAAQABAAAAAAD5/wMAAQABAAAAAGD6/wIAAQADAAAAAAD6/wMAAQADAAAAADD7/wIAAQABAAAAAFD7/wMAAQABAAAAADD8/wEAAQAEAAAAAGD9/wEAAQACAAAAAFD+/wEAAQAEAAAAAFA=")
 tile_set = ExtResource("9_skh2a")
 
-[node name="StagedAreaMapLayer" type="TileMapLayer" parent="."]
+[node name="InteriorStagedAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 2
 tile_set = SubResource("TileSet_ejphp")
 

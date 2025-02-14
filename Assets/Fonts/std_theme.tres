@@ -58,7 +58,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1u0w8"]
-bg_color = Color(0.548536, 0.267331, 5.77569e-07, 1)
+bg_color = Color(0.419097, 0.211761, 0, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -67,7 +67,7 @@ corner_radius_bottom_left = 10
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhuot"]
 content_margin_left = 5.0
 content_margin_right = 5.0
-bg_color = Color(0.505882, 0.235294, 0.0117647, 1)
+bg_color = Color(0.196463, 0.0847536, 1.20327e-08, 1)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -79,7 +79,7 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f1k2r"]
-bg_color = Color(0.506917, 0.233338, 0.0132576, 1)
+bg_color = Color(0.156863, 0.0627451, 0, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -106,6 +106,9 @@ HSlider/styles/grabber_area = SubResource("StyleBoxFlat_ljplu")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_tk82o")
 HSlider/styles/slider = SubResource("StyleBoxFlat_fa5o6")
 RichTextLabel/colors/default_color = Color(0.705371, 0.381805, 0.0924022, 1)
+TabContainer/colors/font_hovered_color = Color(0.146375, 0.0583078, 0, 1)
+TabContainer/colors/font_selected_color = Color(0.705882, 0.380392, 0.0941176, 1)
+TabContainer/colors/font_unselected_color = Color(0.489666, 0.255453, 0.0471655, 1)
 TabContainer/styles/panel = SubResource("StyleBoxFlat_fck5x")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxFlat_vg24n")
 TabContainer/styles/tab_focus = SubResource("StyleBoxFlat_my4nw")

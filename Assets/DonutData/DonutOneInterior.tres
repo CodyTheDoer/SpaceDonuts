@@ -7,5 +7,5 @@ script = ExtResource("1_3kjc1")
 world_name = "Donut One Interior"
 new_instance = true
 ring_world_x_max = 120.0
-ring_world_y_max = 800.0
+ring_world_y_max = 1000.0
 tile_map = Array[Array]([])

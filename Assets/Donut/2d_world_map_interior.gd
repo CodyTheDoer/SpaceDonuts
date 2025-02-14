@@ -1,11 +1,11 @@
 extends Control
 
 @onready var popup_action_menu: Node2D = $popup_action_menu
-@onready var target_area_map_layer: TileMapLayer = $TargetAreaMapLayer
-@onready var remove_area_map_layer: TileMapLayer = $RemoveAreaMapLayer
-@onready var staged_area_map_layer: TileMapLayer = $StagedAreaMapLayer
-@onready var wip_area_map_layer: TileMapLayer = $WIPAreaMapLayer
-@onready var tilemap: TileMapLayer = %DonutTileMapLayer
+@onready var interior_target_area_map_layer: TileMapLayer = $InteriorTargetAreaMapLayer
+@onready var interior_remove_area_map_layer: TileMapLayer = $InteriorRemoveAreaMapLayer
+@onready var interior_staged_area_map_layer: TileMapLayer = $InteriorStagedAreaMapLayer
+@onready var interior_wip_area_map_layer: TileMapLayer = $InteriorWIPAreaMapLayer
+@onready var interior_tilemap: TileMapLayer = %DonutInteriorTileMapLayer
 @onready var player: Player = %Player
 @onready var camera_2d: Camera2D = %Camera2D
 @onready var plots_count: RichTextLabel = %PlotsCount
@@ -20,7 +20,7 @@ extends Control
 signal current_camera_zoom(camera_zoom: float)
 
 var active_tile_map: Array[Array] = []
-@export var ring_world_reference_map: Array[Array] = []
+@export var ring_world_interior_reference_map: Array[Array] = []
 @export var player_interface_mapped_targets = []
 var remove_interface_mapped_targets = []
 @export var currently_tiling: bool = false
@@ -99,8 +99,8 @@ func _gui_input(event):
 	if event is InputEventMouseButton:
 		if Input.is_action_just_pressed("right_click"):
 			print("Input.is_action_just_pressed('right_click')")
-			original_right_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
-			remove_area_map_layer.set_cell(original_right_click_position, 0, Vector2(3, 0))
+			original_right_click_position = interior_target_area_map_layer.local_to_map(get_global_mouse_position())
+			interior_remove_area_map_layer.set_cell(original_right_click_position, 0, Vector2(3, 0))
 		if Input.is_action_pressed("right_click"):
 			print("Input.is_action_pressed('right_click')")
 			right_click_pressed = true
@@ -109,12 +109,12 @@ func _gui_input(event):
 			right_click_pressed = false
 			if !left_click_pressed:
 				print("!Input.is_action_pressed('left_click')")
-				remove_area_map_layer.clear()
+				interior_remove_area_map_layer.clear()
 				remove_range_from_player_interface_map(original_right_click_position, hover_right_click_position)
 		if Input.is_action_just_pressed("left_click"):
 			print("Input.is_action_just_pressed('left_click')")
-			original_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
-			target_area_map_layer.set_cell(original_left_click_position, 0, Vector2(3, 0))
+			original_left_click_position = interior_target_area_map_layer.local_to_map(get_global_mouse_position())
+			interior_target_area_map_layer.set_cell(original_left_click_position, 0, Vector2(3, 0))
 		if Input.is_action_pressed("left_click"):
 			print("Input.is_action_pressed('left_click')")
 			left_click_pressed = true
@@ -123,19 +123,19 @@ func _gui_input(event):
 			print("Input.is_action_just_released('left_click')")
 			append_range_to_player_interface_map(original_left_click_position, hover_left_click_position)
 			if both_clicked == true:
-				remove_area_map_layer.clear()
+				interior_remove_area_map_layer.clear()
 				remove_arrays_from_player_interface_map(remove_interface_mapped_targets)
 				both_clicked = false
-			target_area_map_layer.clear()
+			interior_target_area_map_layer.clear()
 	if right_click_pressed:
-		hover_right_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
+		hover_right_click_position = interior_target_area_map_layer.local_to_map(get_global_mouse_position())
 		animate_target_bounds_from_og_to_hover_remove(original_right_click_position, hover_right_click_position)
 	if left_click_pressed:
 		if Input.is_action_just_released("right_click"):
 			print("Input.is_action_just_released('right_click')")
 			remove_interface_mapped_targets.append([original_right_click_position, hover_right_click_position])
 			both_clicked = true
-		hover_left_click_position = target_area_map_layer.local_to_map(get_global_mouse_position())
+		hover_left_click_position = interior_target_area_map_layer.local_to_map(get_global_mouse_position())
 		animate_target_bounds_from_og_to_hover_target(original_left_click_position, hover_left_click_position)
 
 # // --- _ready() --- //
@@ -147,7 +147,7 @@ func set_ring_world_x_and_y():
 
 func build_ringworld_map():
 	ring_world.build_if_new()
-	ring_world_reference_map = ring_world.tile_map
+	ring_world_interior_reference_map = ring_world.tile_map
 
 func init_active_tile_map():
 	for x in range(0 , world_x_max):
@@ -179,7 +179,7 @@ func world_options_popup_menu():
 		randomize()
 		var local_target_map = player_interface_mapped_targets.duplicate()
 		local_target_map.shuffle()
-		wip_area_map_layer.clear()
+		interior_wip_area_map_layer.clear()
 		player_interface_mapped_targets.clear()
 		if await init_action_from_selection(
 			popup_action_menu.get_label_array()[popup_action_menu.selection], 
@@ -199,7 +199,7 @@ func remove_targets_outside_of_world_coords(array: Array):
 func init_action_from_selection(selection: String, target_array: Array):
 	print(selection, ", currently_tiling: ", currently_tiling)
 	var clean_target_array = remove_targets_outside_of_world_coords(target_array.duplicate())
-	wip_area_map_layer.set_cells_terrain_connect(clean_target_array, 0, 0, true)
+	interior_wip_area_map_layer.set_cells_terrain_connect(clean_target_array, 0, 0, true)
 	if currently_tiling:
 		return false
 	if !currently_tiling:
@@ -243,7 +243,7 @@ func init_action_from_selection(selection: String, target_array: Array):
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
 		currently_tiling = false
-		wip_area_map_layer.clear()
+		interior_wip_area_map_layer.clear()
 		clean_target_count = 0
 		if plots_count != null:
 			plots_count.text = "Ready..."
@@ -254,9 +254,9 @@ func monitor_tile_queue():
 		if updates_queued != null:
 			updates_queued.text = str(len(tile_queue))
 		previous_tile_queue_size = len(tile_queue)
-		staged_area_map_layer.clear()
+		interior_staged_area_map_layer.clear()
 		for tileset in tile_queue:
-			staged_area_map_layer.set_cells_terrain_connect(tileset[1], 0, 0, false)
+			interior_staged_area_map_layer.set_cells_terrain_connect(tileset[1], 0, 0, false)
 	
 	if len(tile_queue) > 0 && currently_tiling == false:
 		await init_action_from_selection(tile_queue[0][0], tile_queue[0][1])
@@ -267,7 +267,7 @@ func update_tile_to(location: Vector2i, new_tile: String):
 		return
 	if location.y > world_y_max:
 		return
-	ring_world_reference_map[location.x][location.y] = tile_atlas_paths[potential_matches[new_tile]]
+	ring_world_interior_reference_map[location.x][location.y] = tile_atlas_paths[potential_matches[new_tile]]
 
 func update_player_tile_pos():
 	var player_in_block = Vector2(player.position.x / tile_size as int, player.position.y / tile_size as int)
@@ -285,7 +285,7 @@ func display_tiles_in_radius():
 	for tile in display_tiles:
 		if tile.x > 0 and tile.y > 0:
 			if tile.x < world_x_max and tile.y < world_y_max:
-				tilemap.set_cell(tile, 1, ring_world_reference_map[tile.x][tile.y])
+				interior_tilemap.set_cell(tile, 1, ring_world_interior_reference_map[tile.x][tile.y])
 				active_tile_map[tile.x][tile.y] = 1
 	# Prep to depopulate the tiles that aren't within the radius.
 	var remove_tiles = []
@@ -298,14 +298,14 @@ func display_tiles_in_radius():
 		remove_tiles.erase(tile)
 	# Remove the tiles not within the radius
 	for target in remove_tiles:
-		tilemap.set_cell(target, -1)
+		interior_tilemap.set_cell(target, -1)
 		active_tile_map[target.x][target.y] = 0
 
 func monitor_and_move_player_when_crossing_y_bounds():
 	if player_tile_pos.y > world_y_max:
-		player.position.y = 0
+		player.position.y = 1 * 32
 	if player_tile_pos.y < 0:
-		player.position.y = world_y_max * 32
+		player.position.y = (world_y_max * 32) - (1 * 32)
 
 func monitor_and_stop_player_when_crossing_x_bounds():
 	if player_tile_pos.x > world_x_max - 1:
@@ -327,29 +327,29 @@ func animate_target_bounds_from_og_to_hover_target(p1: Vector2, p2: Vector2):
 	var difference = p1 - p2
 	if difference.x * difference.y > 15625 or difference.x * difference.y < -15625:
 		return
-	target_area_map_layer.clear()
+	interior_target_area_map_layer.clear()
 	
 	# No movement, Original position
 	if difference == Vector2(0, 0):
-		target_area_map_layer.set_cell(p1, 0, Vector2(3, 0))
+		interior_target_area_map_layer.set_cell(p1, 0, Vector2(3, 0))
 	
 	# Single wide Column, Y movement 
 	if difference.x == 0 and difference.y != 0:
 		if difference.y > 0:
 			for y in difference.y + 1:
-				target_area_map_layer.set_cell(p1 - Vector2(0, y), 0, Vector2(3, 0))
+				interior_target_area_map_layer.set_cell(p1 - Vector2(0, y), 0, Vector2(3, 0))
 		else:
 			for y in -difference.y + 1:
-				target_area_map_layer.set_cell(p1 + Vector2(0, y), 0, Vector2(3, 0))
+				interior_target_area_map_layer.set_cell(p1 + Vector2(0, y), 0, Vector2(3, 0))
 	
 	# Single wide Row, X movement 
 	if difference.x != 0 and difference.y == 0:
 		if difference.x > 0:
 			for x in difference.x + 1:
-				target_area_map_layer.set_cell(p1 - Vector2(x, 0), 0, Vector2(3, 0))
+				interior_target_area_map_layer.set_cell(p1 - Vector2(x, 0), 0, Vector2(3, 0))
 		else:
 			for x in -difference.x + 1:
-				target_area_map_layer.set_cell(p1 + Vector2(x, 0), 0, Vector2(3, 0))
+				interior_target_area_map_layer.set_cell(p1 + Vector2(x, 0), 0, Vector2(3, 0))
 	
 	# Expanded in two directions, X and Y movement
 	if difference != Vector2(0, 0):
@@ -357,47 +357,47 @@ func animate_target_bounds_from_og_to_hover_target(p1: Vector2, p2: Vector2):
 		if difference > Vector2(0, 0):
 			for x in difference.x + 1:
 				for y in difference.y + 1:
-					target_area_map_layer.set_cell(p1 - Vector2(x, y), 0, Vector2(3, 0))
+					interior_target_area_map_layer.set_cell(p1 - Vector2(x, y), 0, Vector2(3, 0))
 		# Bottom Left
 		if difference.x > 0 and difference.y < 0:
 			for x in difference.x + 1:
 				for y in -difference.y + 1:
-					target_area_map_layer.set_cell(p1 - Vector2(x, -y), 0, Vector2(3, 0))
+					interior_target_area_map_layer.set_cell(p1 - Vector2(x, -y), 0, Vector2(3, 0))
 		# Upper Right
 		if difference.x < 0 and difference.y > 0:
 			for x in -difference.x + 1:
 				for y in difference.y + 1:
-					target_area_map_layer.set_cell(p1 - Vector2(-x, y), 0, Vector2(3, 0))
+					interior_target_area_map_layer.set_cell(p1 - Vector2(-x, y), 0, Vector2(3, 0))
 		# Bottom Right
 		else:
 			for x in -difference.x + 1:
 				for y in -difference.y + 1:
-					target_area_map_layer.set_cell(p1 + Vector2(x, y), 0, Vector2(3, 0))
+					interior_target_area_map_layer.set_cell(p1 + Vector2(x, y), 0, Vector2(3, 0))
 
 func animate_target_bounds_from_og_to_hover_remove(p1: Vector2, p2: Vector2):
 	var difference = p1 - p2
 	
 	# No movement, Original position
 	if difference == Vector2(0, 0):
-		remove_area_map_layer.set_cell(p1, 0, Vector2(3, 0))
+		interior_remove_area_map_layer.set_cell(p1, 0, Vector2(3, 0))
 	
 	# Single wide Column, Y movement 
 	if difference.x == 0 and difference.y != 0:
 		if difference.y > 0:
 			for y in difference.y + 1:
-				remove_area_map_layer.set_cell(p1 - Vector2(0, y), 0, Vector2(3, 0))
+				interior_remove_area_map_layer.set_cell(p1 - Vector2(0, y), 0, Vector2(3, 0))
 		else:
 			for y in -difference.y + 1:
-				remove_area_map_layer.set_cell(p1 + Vector2(0, y), 0, Vector2(3, 0))
+				interior_remove_area_map_layer.set_cell(p1 + Vector2(0, y), 0, Vector2(3, 0))
 	
 	# Single wide Row, X movement 
 	if difference.x != 0 and difference.y == 0:
 		if difference.x > 0:
 			for x in difference.x + 1:
-				remove_area_map_layer.set_cell(p1 - Vector2(x, 0), 0, Vector2(3, 0))
+				interior_remove_area_map_layer.set_cell(p1 - Vector2(x, 0), 0, Vector2(3, 0))
 		else:
 			for x in -difference.x + 1:
-				remove_area_map_layer.set_cell(p1 + Vector2(x, 0), 0, Vector2(3, 0))
+				interior_remove_area_map_layer.set_cell(p1 + Vector2(x, 0), 0, Vector2(3, 0))
 	
 	# Expanded in two directions, X and Y movement
 	if difference != Vector2(0, 0):
@@ -405,22 +405,22 @@ func animate_target_bounds_from_og_to_hover_remove(p1: Vector2, p2: Vector2):
 		if difference > Vector2(0, 0):
 			for x in difference.x + 1:
 				for y in difference.y + 1:
-					remove_area_map_layer.set_cell(p1 - Vector2(x, y), 0, Vector2(3, 0))
+					interior_remove_area_map_layer.set_cell(p1 - Vector2(x, y), 0, Vector2(3, 0))
 		# Bottom Left
 		if difference.x > 0 and difference.y < 0:
 			for x in difference.x + 1:
 				for y in -difference.y + 1:
-					remove_area_map_layer.set_cell(p1 - Vector2(x, -y), 0, Vector2(3, 0))
+					interior_remove_area_map_layer.set_cell(p1 - Vector2(x, -y), 0, Vector2(3, 0))
 		# Upper Right
 		if difference.x < 0 and difference.y > 0:
 			for x in -difference.x + 1:
 				for y in difference.y + 1:
-					remove_area_map_layer.set_cell(p1 - Vector2(-x, y), 0, Vector2(3, 0))
+					interior_remove_area_map_layer.set_cell(p1 - Vector2(-x, y), 0, Vector2(3, 0))
 		# Bottom Right
 		else:
 			for x in -difference.x + 1:
 				for y in -difference.y + 1:
-					remove_area_map_layer.set_cell(p1 + Vector2(x, y), 0, Vector2(3, 0))
+					interior_remove_area_map_layer.set_cell(p1 + Vector2(x, y), 0, Vector2(3, 0))
 
 func append_range_to_player_interface_map(p1: Vector2, p2: Vector2):
 	var difference = p1 - p2
@@ -471,7 +471,7 @@ func append_range_to_player_interface_map(p1: Vector2, p2: Vector2):
 					player_interface_mapped_targets.append(p1 + Vector2(x, y))
 	
 	remove_player_interface_map_duplicates()
-	wip_area_map_layer.set_cells_terrain_connect(player_interface_mapped_targets, 0, 0, false)
+	interior_wip_area_map_layer.set_cells_terrain_connect(player_interface_mapped_targets, 0, 0, false)
 
 func remove_player_interface_map_duplicates():
 	for target in player_interface_mapped_targets:
@@ -536,8 +536,8 @@ func remove_range_from_player_interface_map(p1: Vector2, p2: Vector2):
 				for y in -difference.y + 1:
 					player_interface_mapped_targets.erase(p1 + Vector2(x, y))
 	
-	wip_area_map_layer.clear()
-	wip_area_map_layer.set_cells_terrain_connect(player_interface_mapped_targets, 0, 0, true)
+	interior_wip_area_map_layer.clear()
+	interior_wip_area_map_layer.set_cells_terrain_connect(player_interface_mapped_targets, 0, 0, true)
 	
 	remove_remove_area_map_duplicates()
 

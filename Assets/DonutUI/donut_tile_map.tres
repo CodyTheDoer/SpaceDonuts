@@ -1,7 +1,7 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://b0o58eyb2u6dh"]
 
 [ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArraySoil.png" id="1_nej83"]
-[ext_resource type="Texture2D" uid="uid://dfffx70ifs4cn" path="res://Assets/Textures/TextureArrayMetal.png" id="2_bkhsm"]
+[ext_resource type="Texture2D" uid="uid://dbk6ooyo511g2" path="res://Assets/Textures/TextureArrayMetal2.png" id="2_atwnr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13rvr"]
 resource_name = "Soil"
@@ -69,7 +69,7 @@ texture_region_size = Vector2i(32, 32)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x6y4g"]
 resource_name = "Metal"
-texture = ExtResource("2_bkhsm")
+texture = ExtResource("2_atwnr")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0

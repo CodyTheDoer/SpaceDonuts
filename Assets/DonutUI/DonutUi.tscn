@@ -1,15 +1,26 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvocp7ql0dy4g"]
+[gd_scene load_steps=16 format=3 uid="uid://dvocp7ql0dy4g"]
 
 [ext_resource type="Script" path="res://Assets/DonutUI/donut_ui.gd" id="1_6ajj8"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOneInterior.tres" id="2_3n4wt"]
 [ext_resource type="Resource" uid="uid://bfqo8fosnmwt5" path="res://Assets/3DLocationIndicator/Player_Position_Indicator.tres" id="2_4yysp"]
 [ext_resource type="PackedScene" uid="uid://bwh3ydq45bsue" path="res://Assets/Donut/donut_interior_map.tscn" id="3_1sr3o"]
+[ext_resource type="Resource" uid="uid://dok1pp1m55ays" path="res://Assets/DonutData/DonutOneExterior.tres" id="3_vy14a"]
 [ext_resource type="PackedScene" uid="uid://bgl448k3tm2r" path="res://Assets/Space/space.tscn" id="4_xxg0w"]
 [ext_resource type="Theme" uid="uid://dlqvcrl07vw47" path="res://Assets/Fonts/std_theme.tres" id="5_ey4y7"]
 [ext_resource type="Shader" path="res://Assets/shaders/DonutUi_ColorRect_BG.gdshader" id="5_tk4qq"]
 [ext_resource type="Texture2D" uid="uid://cfl3pt8ght0fg" path="res://Assets/Textures/popup menu/bg1.png" id="6_ap5ih"]
 [ext_resource type="PackedScene" uid="uid://b4u22yeerjrn7" path="res://Assets/DonutUI/nine_patch_rect.tscn" id="6_v25pf"]
 [ext_resource type="PackedScene" uid="uid://co5ovok2d27pr" path="res://Assets/Donut/donut_exterior_map.tscn" id="7_anjr5"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g41t6"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(350, 200, 1)
+gravity = Vector3(4000, 0, 0)
+scale_min = 0.01
+scale_max = 0.06
+anim_speed_min = 16.0
+anim_speed_max = 16.0
 
 [sub_resource type="GDScript" id="GDScript_wo8td"]
 script/source = "extends Resource
@@ -59,19 +70,10 @@ label_array = ["CANCEL", "DIRT", "FLOWERS", "GRASS", "ROCKY", "TILLED"]
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wnl2t"]
 shader = ExtResource("5_tk4qq")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_g41t6"]
-particle_flag_disable_z = true
-emission_shape = 3
-emission_box_extents = Vector3(100, 100, 1)
-gravity = Vector3(4000, 0, 0)
-scale_min = 0.01
-scale_max = 0.06
-anim_speed_min = 16.0
-anim_speed_max = 16.0
-
 [node name="DonutUI" type="CanvasLayer" groups=["Persist"]]
 script = ExtResource("1_6ajj8")
-space_donut = ExtResource("2_3n4wt")
+space_donut_interior = ExtResource("2_3n4wt")
+space_donut_exterior = ExtResource("3_vy14a")
 player_indicator_res = ExtResource("2_4yysp")
 
 [node name="bg orange" type="ColorRect" parent="."]
@@ -81,6 +83,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.397743, 0.176959, 0.00951227, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="bg orange"]
+modulate = Color(0.713726, 0.192157, 0.0392157, 0.392157)
+scale = Vector2(4.91318, 10.046)
+amount = 4000
+process_material = SubResource("ParticleProcessMaterial_g41t6")
+texture = ExtResource("6_ap5ih")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchors_preset = 15
@@ -134,13 +143,12 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("5_ey4y7")
-current_tab = 1
+current_tab = 0
 
 [node name="Surface" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
-visible = false
 z_index = 3
 clip_contents = true
-custom_minimum_size = Vector2(600, 0)
+custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -149,10 +157,11 @@ metadata/_tab_index = 0
 
 [node name="SurfaceViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface"]
 unique_name_in_owner = true
-layout_mode = 2
-offset_top = 7.0
-offset_right = 600.0
-offset_bottom = 915.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 10.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -160,18 +169,21 @@ stretch = true
 
 [node name="SurfaceViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer"]
 handle_input_locally = false
-size = Vector2i(600, 908)
-render_target_update_mode = 0
+size = Vector2i(700, 905)
+render_target_update_mode = 4
 
 [node name="DonutInteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport" instance=ExtResource("3_1sr3o")]
 unique_name_in_owner = true
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface" instance=ExtResource("6_v25pf")]
+z_index = 3
 layout_mode = 1
 offset_top = 6.0
 
 [node name="Exterior" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
-custom_minimum_size = Vector2(600, 0)
+visible = false
+clip_contents = true
+custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 metadata/_tab_index = 1
 
@@ -186,8 +198,8 @@ grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(600, 908)
-render_target_update_mode = 4
+size = Vector2i(700, 908)
+render_target_update_mode = 0
 
 [node name="DonutExteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
 unique_name_in_owner = true
@@ -195,6 +207,7 @@ ring_world = ExtResource("2_3n4wt")
 popup_options_labels = SubResource("Resource_seomr")
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior" instance=ExtResource("6_v25pf")]
+z_index = 3
 layout_mode = 2
 anchors_preset = 0
 offset_top = 6.0
@@ -218,7 +231,7 @@ layout_mode = 2
 
 [node name="Stats Interface" type="Control" parent="VBoxContainer/Screen"]
 clip_contents = true
-custom_minimum_size = Vector2(490, 0)
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface"]
@@ -1049,7 +1062,7 @@ process_material = SubResource("ParticleProcessMaterial_g41t6")
 texture = ExtResource("6_ap5ih")
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/Stats Interface" instance=ExtResource("6_v25pf")]
-z_index = 2
+z_index = 3
 layout_mode = 1
 offset_bottom = -9.0
 
@@ -1074,7 +1087,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/OrbitDisplay/3D/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(786, 858)
+size = Vector2i(776, 858)
 render_target_update_mode = 4
 
 [node name="Space" parent="VBoxContainer/Screen/OrbitDisplay/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]
@@ -1122,7 +1135,7 @@ points = PackedVector2Array(709, 564, 661, 544)
 width = 0.75
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/OrbitDisplay/3D" instance=ExtResource("6_v25pf")]
-z_index = 2
+z_index = 3
 layout_mode = 1
 
 [node name="UI Subpanel" type="Control" parent="VBoxContainer/Screen/OrbitDisplay"]
@@ -1131,6 +1144,7 @@ custom_minimum_size = Vector2(0, 120)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel"]
+clip_contents = true
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1192,7 +1206,7 @@ custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/OrbitDisplay/UI Subpanel" instance=ExtResource("6_v25pf")]
-z_index = 2
+z_index = 3
 layout_mode = 1
 offset_bottom = -10.0
 

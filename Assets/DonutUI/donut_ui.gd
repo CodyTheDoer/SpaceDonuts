@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-@export var space_donut: SpaceDonutInterior
+@export var space_donut_interior: SpaceDonutInterior
+@export var space_donut_exterior: SpaceDonutExterior
 @export var player_indicator_res: SpaceDonut3DLocationIndicator
 @export var current_2d_zoom: float
 @export var current_3d_rotation: int
@@ -29,8 +30,8 @@ func update_player_location_export():
 	player_location = _2d_map_viewport_container.player_coords
 
 func update_2d_gui_location_indicators():
-	height_indicator.value = (donut_interior_map.player_coords.y / ( space_donut.ring_world_y_max * 32 ) * 100) * -1 + 100
-	width_indicator.value = donut_interior_map.player_coords.x / ( space_donut.ring_world_x_max * 32 ) * 100
+	height_indicator.value = (donut_interior_map.player_coords.y / ( space_donut_interior.ring_world_y_max * 32 ) * 100) * -1 + 100
+	width_indicator.value = donut_interior_map.player_coords.x / ( space_donut_interior.ring_world_x_max * 32 ) * 100
 
 func update_3d_gui_camera_orbit(delta: float):
 	for node in get_tree().get_nodes_in_group("Camera3DOrbit"):
