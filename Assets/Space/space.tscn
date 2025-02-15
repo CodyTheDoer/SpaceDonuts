@@ -1,7 +1,9 @@
-[gd_scene load_steps=20 format=3 uid="uid://bgl448k3tm2r"]
+[gd_scene load_steps=22 format=3 uid="uid://bgl448k3tm2r"]
 
 [ext_resource type="Script" path="res://Assets/Space/space.gd" id="1_fkdw2"]
 [ext_resource type="PackedScene" uid="uid://ce5y5ea5jw6w4" path="res://Assets/3DLocationIndicator/space_donut_3d_location_indicator.tscn" id="2_7dtb8"]
+[ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOneInterior.tres" id="2_pky8u"]
+[ext_resource type="Resource" uid="uid://bfqo8fosnmwt5" path="res://Assets/3DLocationIndicator/Player_Position_Indicator.tres" id="3_krrn8"]
 [ext_resource type="Script" path="res://Assets/Space/orbit_camera.gd" id="3_qi5ov"]
 
 [sub_resource type="Gradient" id="Gradient_dxx31"]
@@ -98,13 +100,15 @@ roughness = 0.2
 
 [node name="Space" type="Node3D"]
 script = ExtResource("1_fkdw2")
+space_donut = ExtResource("2_pky8u")
+player_indicator_res = ExtResource("3_krrn8")
 
 [node name="PlayerIndicator" parent="." instance=ExtResource("2_7dtb8")]
 unique_name_in_owner = true
 transform = Transform3D(-0.106316, 0, 0.994332, 0, 1, 0, -0.994332, 0, -0.106316, 0, 0, 0)
 
 [node name="Camera3DOrbitControl" type="Node3D" parent="." groups=["Camera3DOrbit"]]
-transform = Transform3D(12, 0, 0, 0, 80, 0, 0, 0, 12, 0, 0, 0)
+transform = Transform3D(-0.648946, 0, -11.9824, 0, 80, 0, 11.9824, 0, -0.648946, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Camera3DOrbitControl"]
 transform = Transform3D(0.015727, -0.0748995, -0.0329722, 0.0112823, 2.86923e-09, 0.0053814, -0.0322451, -0.0365309, 0.0676032, -0.660743, 0.1, 1.33333)

@@ -46,7 +46,10 @@ func update_zoom_slider_to_match_player_zoom(camera_zoom: float) -> void:
 func load_player_name(player_name):
 	pass
 
-func load_space_donut(space_donut):
+func load_space_donut_interior(space_donut_interior):
+	pass
+
+func load_space_donut_exterior(space_donut_exterior):
 	pass
 
 func load_player_location(player_location):

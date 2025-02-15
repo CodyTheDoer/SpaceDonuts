@@ -23,7 +23,8 @@ func load_save():
 	for game in config.get_sections():
 		# Fetch the data for each section.
 		var player_name = config.get_value(game, "player_name")
-		var space_donut = config.get_value(game, "space_donut")
+		var space_donut_interior = config.get_value(game, "space_donut_interior")
+		var space_donut_exterior = config.get_value(game, "space_donut_exterior")
 		var player_location = config.get_value(game, "player_location")
 		var player_indicator_res = config.get_value(game, "player_indicator_res")
 		var current_2d_zoom = config.get_value(game, "current_2d_zoom")
@@ -35,7 +36,8 @@ func load_save():
 		var previous_tile_queue_size = config.get_value(game, "previous_tile_queue_size")
 		
 		donut_ui.load_player_name(player_name)
-		donut_ui.load_space_donut(space_donut)
+		donut_ui.load_space_donut(space_donut_interior)
+		donut_ui.load_space_donut(space_donut_exterior)
 		donut_ui.load_player_location(player_location)
 		donut_ui.load_player_indicator_res(player_indicator_res)
 		donut_ui.load_current_2d_zoom(current_2d_zoom)
@@ -49,7 +51,8 @@ func load_save():
 func save():
 	var config = ConfigFile.new()
 	config.set_value("game", "player_name", player_name)
-	config.set_value("game", "space_donut", donut_ui.space_donut)
+	config.set_value("game", "space_donut_interior", donut_ui.space_donut_interior)
+	config.set_value("game", "space_donut_exterior", donut_ui.space_donut_exterior)
 	config.set_value("game", "player_location", donut_ui.player_location)
 	config.set_value("game", "player_indicator_res", donut_ui.player_indicator_res)
 	config.set_value("game", "current_2d_zoom", donut_ui.current_2d_zoom)
@@ -61,14 +64,3 @@ func save():
 	config.set_value("game", "previous_tile_queue_size", donut_ui.previous_tile_queue_size)
 	# Save it to a file (overwrite if already exists).
 	config.save("user://game_save.cfg")
-
-#@export var space_donut: SpaceDonut
-#@export var player_indicator_res: SpaceDonut3DLocationIndicator
-#@export var current_2d_zoom: float
-#@export var current_3d_rotation: int
-#@export var player_location: Vector2
-#@export var inner_ringworld_reference_map: Array[Array]
-#@export var player_interface_map: Array
-#@export var currently_tiling: bool
-#@export var tile_queue: Array
-#@export var previous_tile_queue_size: int

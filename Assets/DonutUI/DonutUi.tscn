@@ -114,6 +114,24 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Inner Surface/Spacer"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 37.0
+grow_horizontal = 2
+alignment = 2
+
+[node name="PlayerNameLabel" type="Label" parent="VBoxContainer/Screen/Inner Surface/Spacer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("5_ey4y7")
+text = "Player Name"
+horizontal_alignment = 2
+
+[node name="soacer" type="Control" parent="VBoxContainer/Screen/Inner Surface/Spacer/HBoxContainer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
 [node name="YIndicator and Map" type="HBoxContainer" parent="VBoxContainer/Screen/Inner Surface"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -143,9 +161,10 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("5_ey4y7")
-current_tab = 0
+current_tab = 1
 
 [node name="Surface" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
+visible = false
 z_index = 3
 clip_contents = true
 custom_minimum_size = Vector2(700, 0)
@@ -170,7 +189,8 @@ stretch = true
 [node name="SurfaceViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer"]
 handle_input_locally = false
 size = Vector2i(700, 905)
-render_target_update_mode = 4
+size_2d_override = Vector2i(700, 920)
+render_target_update_mode = 0
 
 [node name="DonutInteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport" instance=ExtResource("3_1sr3o")]
 unique_name_in_owner = true
@@ -181,7 +201,6 @@ layout_mode = 1
 offset_top = 6.0
 
 [node name="Exterior" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
-visible = false
 clip_contents = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
@@ -189,17 +208,17 @@ metadata/_tab_index = 1
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 7.0
+anchor_bottom = 1.026
+offset_bottom = 0.209961
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(700, 908)
-render_target_update_mode = 0
+size = Vector2i(700, 920)
+render_target_update_mode = 4
 
 [node name="DonutExteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
 unique_name_in_owner = true
@@ -208,9 +227,7 @@ popup_options_labels = SubResource("Resource_seomr")
 
 [node name="NinePatchRect" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior" instance=ExtResource("6_v25pf")]
 z_index = 3
-layout_mode = 2
-anchors_preset = 0
-offset_top = 6.0
+layout_mode = 1
 
 [node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="VBoxContainer/Screen/Inner Surface"]
 layout_mode = 2
@@ -1092,8 +1109,6 @@ render_target_update_mode = 4
 
 [node name="Space" parent="VBoxContainer/Screen/OrbitDisplay/3D/SubViewportContainer/SubViewport" instance=ExtResource("4_xxg0w")]
 unique_name_in_owner = true
-space_donut = ExtResource("2_3n4wt")
-player_indicator_res = ExtResource("2_4yysp")
 
 [node name="Control" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/3D"]
 layout_mode = 1

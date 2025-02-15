@@ -60,6 +60,7 @@ offsets = PackedFloat32Array(0.780769, 0.919231)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_eip3w"]
 noise_type = 4
+seed = 1
 frequency = 0.2745
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3muy8"]
