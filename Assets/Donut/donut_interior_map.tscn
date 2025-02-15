@@ -435,23 +435,28 @@ position = Vector2(40, 43)
 
 [node name="DonutInteriorTileMapLayer" type="TileMapLayer" parent="."]
 unique_name_in_owner = true
+texture_filter = 1
 tile_set = ExtResource("3_m7235")
 
 [node name="InteriorTargetAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
+texture_filter = 1
 tile_set = ExtResource("6_4yqsi")
 
 [node name="InteriorWIPAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 1
+texture_filter = 1
 tile_set = ExtResource("7_3o4wg")
 
 [node name="InteriorRemoveAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 2
+texture_filter = 1
 tile_map_data = PackedByteArray("AAD4/wEAAQAAAAAAAAD5/wIAAQABAAAAAAD5/wMAAQABAAAAAGD6/wIAAQADAAAAAAD6/wMAAQADAAAAADD7/wIAAQABAAAAAFD7/wMAAQABAAAAADD8/wEAAQAEAAAAAGD9/wEAAQACAAAAAFD+/wEAAQAEAAAAAFA=")
 tile_set = ExtResource("9_skh2a")
 
 [node name="InteriorStagedAreaMapLayer" type="TileMapLayer" parent="."]
 z_index = 2
+texture_filter = 1
 tile_set = SubResource("TileSet_ejphp")
 
 [node name="popup_action_menu" parent="." instance=ExtResource("9_1w1li")]

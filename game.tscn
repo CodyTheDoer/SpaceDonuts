@@ -3,8 +3,11 @@
 [ext_resource type="Script" path="res://game.gd" id="1_bkg76"]
 [ext_resource type="PackedScene" uid="uid://dvocp7ql0dy4g" path="res://Assets/DonutUI/DonutUi.tscn" id="2_3v51j"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_bkg76")
+player_name = "Codiak"
 
 [node name="DonutUI" parent="." instance=ExtResource("2_3v51j")]
 unique_name_in_owner = true

@@ -123,6 +123,7 @@ grow_horizontal = 2
 alignment = 2
 
 [node name="PlayerNameLabel" type="Label" parent="VBoxContainer/Screen/Inner Surface/Spacer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_ey4y7")
 text = "Player Name"
@@ -161,10 +162,9 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("5_ey4y7")
-current_tab = 1
+current_tab = 0
 
 [node name="Surface" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
-visible = false
 z_index = 3
 clip_contents = true
 custom_minimum_size = Vector2(700, 0)
@@ -190,7 +190,7 @@ stretch = true
 handle_input_locally = false
 size = Vector2i(700, 905)
 size_2d_override = Vector2i(700, 920)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="DonutInteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport" instance=ExtResource("3_1sr3o")]
 unique_name_in_owner = true
@@ -201,6 +201,7 @@ layout_mode = 1
 offset_top = 6.0
 
 [node name="Exterior" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
+visible = false
 clip_contents = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
@@ -218,7 +219,7 @@ grow_vertical = 2
 [node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(700, 920)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="DonutExteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
 unique_name_in_owner = true
@@ -1229,5 +1230,9 @@ offset_bottom = -10.0
 custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
 
+[connection signal="update_player_position_donut_ui" from="." to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="_load_player_location"]
+[connection signal="update_player_position_donut_ui" from="." to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="_load_player_location"]
 [connection signal="current_camera_zoom" from="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
+[connection signal="current_camera_zoom" from="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
 [connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="_update_player_camera_zoom"]
+[connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="_update_player_camera_zoom"]

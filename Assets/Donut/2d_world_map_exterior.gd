@@ -93,11 +93,6 @@ func _input(event):
 			if Vector2(camera_zoom, camera_zoom) > Vector2(1, 1):
 				camera_zoom -= 0.035
 
-func _unhandled_input(event):
-	if event is InputEventKey:
-		if event.pressed and event.keycode == KEY_ESCAPE:
-			get_tree().quit()
-
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if Input.is_action_just_pressed("right_click"):
@@ -553,3 +548,7 @@ func remove_range_from_player_interface_map(p1: Vector2, p2: Vector2):
 
 func _update_player_camera_zoom(value: float) -> void:
 	camera_zoom = value
+
+func _load_player_location(location: Vector2):
+	print("Exterior _load_player_locaiton: [ ", location, " ]")
+	player.position = location
