@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dijkcvc7llqw7"]
+
+[ext_resource type="Script" path="res://Assets/PopupMenu/Farming/popup_menu_farming.gd" id="1_eo5bj"]
+[ext_resource type="Texture2D" uid="uid://bbqyerr35gohx" path="res://Assets/Textures/bg2.png" id="2_bpfm1"]
+[ext_resource type="Script" path="res://Assets/PopupMenu/rotate_radial.gd" id="3_qk8my"]
+
+[node name="popup_menu_farming" type="Node2D"]
+script = ExtResource("1_eo5bj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.729412)
+texture = ExtResource("2_bpfm1")
+
+[node name="rotate_radial" type="Node2D" parent="."]
+rotation = -3.14159
+script = ExtResource("3_qk8my")
+
+[node name="rotate_labels" type="Node2D" parent="."]
+rotation = 1.57079

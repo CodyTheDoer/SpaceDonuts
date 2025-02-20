@@ -464,16 +464,13 @@ texture_filter = 1
 tile_set = SubResource("TileSet_ejphp")
 
 [node name="PlantTilemap" type="TileMapLayer" parent="."]
-unique_name_in_owner = true
 z_index = 2
 tile_set = ExtResource("3_m7235")
 
 [node name="popup_action_menu" parent="." instance=ExtResource("9_1w1li")]
 visible = false
-z_index = 3
 
 [node name="popup_menu_farming" parent="." instance=ExtResource("11_sfgql")]
 visible = false
-z_index = 3
 
 [connection signal="current_camera_zoom" from="." to="Camera2D" method="_set_current_camera_zoom"]

@@ -1,7 +1,15 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://b0o58eyb2u6dh"]
+[gd_resource type="TileSet" load_steps=21 format=3 uid="uid://b0o58eyb2u6dh"]
 
 [ext_resource type="Texture2D" uid="uid://cm42flmy13286" path="res://Assets/Textures/TextureArraySoil.png" id="1_nej83"]
 [ext_resource type="Texture2D" uid="uid://dbk6ooyo511g2" path="res://Assets/Textures/TextureArrayMetal2.png" id="2_atwnr"]
+[ext_resource type="Texture2D" uid="uid://cpfhtm21r3l12" path="res://Assets/Textures/place_holder_array_mountain_you_know_wha.png" id="2_uaq55"]
+[ext_resource type="Texture2D" uid="uid://c81ufpg4ahc1i" path="res://Assets/Textures/place_holder_array_green.png" id="3_jjmsj"]
+[ext_resource type="Texture2D" uid="uid://0ojlqd4obvp5" path="res://Assets/Textures/place_holder_array_blue.png" id="5_i7iub"]
+[ext_resource type="Texture2D" uid="uid://bolhsplj3jmb6" path="res://Assets/Textures/place_holder_array_periwinkle.png" id="6_huoxj"]
+[ext_resource type="Texture2D" uid="uid://ctk2wen8581uo" path="res://Assets/Textures/place_holder_array_pink.png" id="7_0yrog"]
+[ext_resource type="Texture2D" uid="uid://bsg8khdbqw6e5" path="res://Assets/Textures/place_holder_array_seafoam.png" id="8_2g1dv"]
+[ext_resource type="Texture2D" uid="uid://da5agviro4v4j" path="res://Assets/Textures/place_holder_array_yellow.png" id="9_g85a3"]
+[ext_resource type="Texture2D" uid="uid://o8eyu47kklsv" path="res://Assets/Textures/place_holder_array_red.png" id="10_xmm8r"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_13rvr"]
 resource_name = "Soil"
@@ -67,6 +75,21 @@ texture_region_size = Vector2i(32, 32)
 4:0/0/terrains_peering_bit/top_side = 0
 4:0/0/terrains_peering_bit/top_right_corner = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ajs21"]
+resource_name = "PlantWheat"
+texture = ExtResource("2_uaq55")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_x6y4g"]
 resource_name = "Metal"
 texture = ExtResource("2_atwnr")
@@ -77,6 +100,111 @@ texture_region_size = Vector2i(32, 32)
 3:0/0 = 0
 4:0/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ljj58"]
+resource_name = "PlantCabbageNapa"
+texture = ExtResource("3_jjmsj")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lvcng"]
+resource_name = "PlantCucumber"
+texture = ExtResource("5_i7iub")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mntm3"]
+resource_name = "PlantOnion"
+texture = ExtResource("6_huoxj")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rweb4"]
+resource_name = "PlantPepper"
+texture = ExtResource("7_0yrog")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_r4wkq"]
+resource_name = "PlantPotato"
+texture = ExtResource("8_2g1dv")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_xubjw"]
+resource_name = "PlantSunFlower"
+texture = ExtResource("9_g85a3")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5qsda"]
+resource_name = "PlantTomato"
+texture = ExtResource("10_xmm8r")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+
 [resource]
 tile_size = Vector2i(32, 32)
 terrain_set_0/mode = 0
@@ -84,3 +212,11 @@ terrain_set_0/terrain_0/name = "Donut"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/2 = SubResource("TileSetAtlasSource_x6y4g")
 sources/1 = SubResource("TileSetAtlasSource_13rvr")
+sources/3 = SubResource("TileSetAtlasSource_ljj58")
+sources/4 = SubResource("TileSetAtlasSource_lvcng")
+sources/5 = SubResource("TileSetAtlasSource_mntm3")
+sources/6 = SubResource("TileSetAtlasSource_rweb4")
+sources/7 = SubResource("TileSetAtlasSource_r4wkq")
+sources/8 = SubResource("TileSetAtlasSource_xubjw")
+sources/9 = SubResource("TileSetAtlasSource_5qsda")
+sources/10 = SubResource("TileSetAtlasSource_ajs21")

@@ -75,8 +75,11 @@ colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_aj67t"]
 gradient = SubResource("Gradient_ofl01")
+width = 128
+height = 128
 fill = 1
 fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.184, 0.269)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_m5xlk"]
 resource_name = "Green"
@@ -426,10 +429,10 @@ texture = SubResource("NoiseTexture2D_3muy8")
 
 [node name="CircleFade" type="TextureRect" parent="Camera2D"]
 z_index = 3
-offset_left = -746.0
-offset_top = -750.0
-offset_right = -682.0
-offset_bottom = -686.0
+offset_left = -1504.0
+offset_top = -1497.0
+offset_right = -1376.0
+offset_bottom = -1369.0
 scale = Vector2(23.419, 23.419)
 texture = SubResource("GradientTexture2D_aj67t")
 

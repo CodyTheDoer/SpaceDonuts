@@ -96,29 +96,29 @@ func _input(event):
 func _gui_input(event):
 	if event is InputEventMouseButton:
 		if Input.is_action_just_pressed("right_click"):
-			print("Input.is_action_just_pressed('right_click')")
+			#print("Input.is_action_just_pressed('right_click')")
 			original_right_click_position = exterior_target_area_map_layer.local_to_map(get_global_mouse_position())
 			exterior_remove_area_map_layer.set_cell(original_right_click_position, 0, Vector2(3, 0))
 		if Input.is_action_pressed("right_click"):
-			print("Input.is_action_pressed('right_click')")
+			#print("Input.is_action_pressed('right_click')")
 			right_click_pressed = true
 		if Input.is_action_just_released("right_click"):
-			print("Input.is_action_just_released('right_click')")
+			#print("Input.is_action_just_released('right_click')")
 			right_click_pressed = false
 			if !left_click_pressed:
-				print("!Input.is_action_pressed('left_click')")
+				#print("!Input.is_action_pressed('left_click')")
 				exterior_remove_area_map_layer.clear()
 				remove_range_from_player_interface_map(original_right_click_position, hover_right_click_position)
 		if Input.is_action_just_pressed("left_click"):
-			print("Input.is_action_just_pressed('left_click')")
+			#print("Input.is_action_just_pressed('left_click')")
 			original_left_click_position = exterior_target_area_map_layer.local_to_map(get_global_mouse_position())
 			exterior_target_area_map_layer.set_cell(original_left_click_position, 0, Vector2(3, 0))
 		if Input.is_action_pressed("left_click"):
-			print("Input.is_action_pressed('left_click')")
+			#print("Input.is_action_pressed('left_click')")
 			left_click_pressed = true
 		if Input.is_action_just_released("left_click"):
 			left_click_pressed = false
-			print("Input.is_action_just_released('left_click')")
+			#print("Input.is_action_just_released('left_click')")
 			append_range_to_player_interface_map(original_left_click_position, hover_left_click_position)
 			if both_clicked == true:
 				exterior_remove_area_map_layer.clear()
@@ -130,7 +130,7 @@ func _gui_input(event):
 		animate_target_bounds_from_og_to_hover_remove(original_right_click_position, hover_right_click_position)
 	if left_click_pressed:
 		if Input.is_action_just_released("right_click"):
-			print("Input.is_action_just_released('right_click')")
+			#print("Input.is_action_just_released('right_click')")
 			remove_interface_mapped_targets.append([original_right_click_position, hover_right_click_position])
 			both_clicked = true
 		hover_left_click_position = exterior_target_area_map_layer.local_to_map(get_global_mouse_position())
@@ -154,6 +154,19 @@ func init_active_tile_map():
 			active_tile_map[x].append(0)
 
 # // --- _process() --- //
+func load_external_donut_reference_map(load_external_donut_reference_map: Array[Array]):
+	#print("External: load_external_donut_reference_map")
+	for x in range(load_external_donut_reference_map.size()):
+		for y in range(load_external_donut_reference_map[x].size()):
+			if x > 0 and y > 0 and x < world_x_max and y < world_y_max:
+				ring_world_exterior_reference_map[x][y] = load_external_donut_reference_map[x][y]
+
+func load_external_donut_player_interface_map(load_external_player_interface_map: Array):
+	var local_array = load_external_player_interface_map
+	#print("load_external_donut_player_interface_map: ", load_external_player_interface_map)
+	exterior_wip_area_map_layer.set_cells_terrain_connect(local_array, 0, 0, true)
+	player_interface_mapped_targets = load_external_player_interface_map
+
 func world_options_popup_menu():
 	var just_pressed_space = Input.is_action_just_pressed("space")
 	var pressed_space = Input.is_action_pressed("space")
@@ -195,19 +208,19 @@ func remove_targets_outside_of_world_coords(array: Array):
 	return array
 
 func init_action_from_selection(selection: String, target_array: Array):
-	print(selection, ", currently_tiling: ", currently_tiling)
+	#print(selection, ", currently_tiling: ", currently_tiling)
 	var clean_target_array = remove_targets_outside_of_world_coords(target_array.duplicate())
 	exterior_wip_area_map_layer.set_cells_terrain_connect(clean_target_array, 0, 0, true)
 	if currently_tiling:
 		return false
 	if !currently_tiling:
 		currently_tiling = true
-		print(selection, ", currently_tiling: ", currently_tiling)
+		#print(selection, ", currently_tiling: ", currently_tiling)
 		match selection:
 			"CANCEL":
 				pass
 			"METAL1":
-				print("Currently_tiling: METAL1")
+				#print("Currently_tiling: METAL1")
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
 					update_tile_to(target, "METAL1")
@@ -215,7 +228,7 @@ func init_action_from_selection(selection: String, target_array: Array):
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
 			"METAL2":
-				print("Currently_tiling: METAL2")
+				#print("Currently_tiling: METAL2")
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
 					update_tile_to(target, "METAL2")
@@ -223,7 +236,7 @@ func init_action_from_selection(selection: String, target_array: Array):
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
 			"METAL3":
-				print("Currently_tiling: METAL3")
+				#print("Currently_tiling: METAL3")
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
 					update_tile_to(target, "METAL3")
@@ -231,7 +244,7 @@ func init_action_from_selection(selection: String, target_array: Array):
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
 			"METAL4":
-				print("Currently_tiling: METAL4")
+				#print("Currently_tiling: METAL4")
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
 					update_tile_to(target, "METAL4")
@@ -239,7 +252,7 @@ func init_action_from_selection(selection: String, target_array: Array):
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
 			"METAL5":
-				print("Currently_tiling: METAL5")
+				#print("Currently_tiling: METAL5")
 				for target in clean_target_array:
 					await get_tree().create_timer(0.00125).timeout 
 					update_tile_to(target, "METAL5")
@@ -247,7 +260,7 @@ func init_action_from_selection(selection: String, target_array: Array):
 					if plots_count != null:
 						plots_count.text = str((clean_target_count / float(len(clean_target_array))) * 100).pad_decimals(2)
 		currently_tiling = false
-		print(selection, ", currently_tiling: ", currently_tiling)
+		#print(selection, ", currently_tiling: ", currently_tiling)
 		exterior_wip_area_map_layer.clear()
 		clean_target_count = 0
 		if plots_count != null:
@@ -550,5 +563,5 @@ func _update_player_camera_zoom(value: float) -> void:
 	camera_zoom = value
 
 func _load_player_location(location: Vector2):
-	print("Exterior _load_player_locaiton: [ ", location, " ]")
+	#print("Exterior _load_player_locaiton: [ ", location, " ]")
 	player.position = location

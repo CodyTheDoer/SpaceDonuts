@@ -22,32 +22,38 @@ var _max_width : float = 40
 var target: float
 
 const CANCEL = 0
-const TILL = 1
-const GRASS = 2
-const ROCK = 3
-const DIRT = 4
-const FLOWERS = 5
-const FARM = 6
+const CABBAGE = 1
+const CUCUMBER = 2
+const ONION = 3
+const PEPPER = 4
+const POTATO = 5
+const SUNFLOWER = 6
+const TOMATO = 7
+const WHEAT = 8
 
 var label = {
 	0: "CANCEL",
-	1: "TILL",
-	2: "GRASS",
-	3: "ROCK",
-	4: "DIRT",
-	5: "FLOWERS",
-	6: "FARM",
+	1: "CABBAGE",
+	2: "CUCUMBER",
+	3: "ONION",
+	4: "PEPPER",
+	5: "POTATO",
+	6: "SUNFLOWER",
+	7: "TOMATO",
+	8: "WHEAT",
 }
 
 func get_label_array():
 	var label_array = [
 		label[CANCEL],
-		label[TILL],
-		label[GRASS],
-		label[ROCK],
-		label[DIRT],
-		label[FLOWERS],
-		label[FARM],
+		label[CABBAGE],
+		label[CUCUMBER],
+		label[ONION],
+		label[PEPPER],
+		label[POTATO],
+		label[SUNFLOWER],
+		label[TOMATO],
+		label[WHEAT],
 	]
 	return label_array
 
@@ -62,13 +68,6 @@ func _process(delta: float) -> void:
 	update_rotate_radial()
 	track_selection_direction()
 	_time += delta
-	
-	# Animation Context:
-		#sin(_time) oscillates between -1 and 1.
-		#abs(sin(_time)) ensures it stays between 0 and 1.
-		#Multiplying by (_max_width - _min_width) scales the range to 0 to the width difference.
-		#Adding _min_width shifts the range to [min_width, max_width].
-		#clamp(value, min, max) ensures no overshooting occurs.
 
 	_popup_arc_width = clamp(abs(sin(_time)) * (_max_width - _min_width) + _min_width, _min_width, _max_width)
 	queue_redraw()
@@ -107,6 +106,9 @@ func update_rotate_labels():
 	if segments >= 8:
 		var additional_rotation_ammount: int = 360 / segments / 2 + 22.5
 		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
+	if segments >= 9:
+		var additional_rotation_ammount: int = 360 / segments / 2 - 7.5
+		rotate_labels.rotate(deg_to_rad(additional_rotation_ammount))
 
 func draw_label(p1: Vector2, label: String):
 	var new_label: Label = Label.new()
@@ -138,17 +140,20 @@ func draw_label(p1: Vector2, label: String):
 	if segments >= 8:
 		new_label.rotation = -2.25
 		new_label.position = p1 - Vector2(-25, -15)
+	if segments >= 9:
+		new_label.rotation = -3.25
+		new_label.position = p1 - Vector2(-75, 10)
 	
 	rotate_labels.add_child(new_label)  
 
 func track_selection_direction():
-	var just_pressed_space = Input.is_action_just_pressed("space")
-	var pressed_space = Input.is_action_pressed("space")
-	var released_space = Input.is_action_just_released("space")
-	if just_pressed_space:
+	var just_pressed_f_key = Input.is_action_just_pressed("f_key")
+	var pressed_f_key = Input.is_action_pressed("f_key")
+	var released_f_key = Input.is_action_just_released("f_key")
+	if just_pressed_f_key:
 		starting_point = get_global_mouse_position()
 		#print(starting_point)
-	if pressed_space:
+	if pressed_f_key:
 		var ending_point = get_global_mouse_position()
 		#print(starting_point)
 		var difference: Vector2 = Vector2(ending_point.x, ending_point.y) - Vector2(starting_point.x, starting_point.y)
@@ -156,7 +161,7 @@ func track_selection_direction():
 		selection_direction = (angle + 1) * 180
 		var single_segment_angle = 360 / segments
 		target = selection_direction / single_segment_angle
-	if released_space:
+	if released_f_key:
 		selection = target
 		selection_confirmed = true
 

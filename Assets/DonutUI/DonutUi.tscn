@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dvocp7ql0dy4g"]
+[gd_scene load_steps=29 format=3 uid="uid://dvocp7ql0dy4g"]
 
 [ext_resource type="Script" path="res://Assets/DonutUI/donut_ui.gd" id="1_6ajj8"]
 [ext_resource type="Resource" uid="uid://lem2hbcxc2oj" path="res://Assets/DonutData/DonutOneInterior.tres" id="2_3n4wt"]
@@ -21,6 +21,137 @@ scale_min = 0.01
 scale_max = 0.06
 anim_speed_min = 16.0
 anim_speed_max = 16.0
+
+[sub_resource type="Animation" id="Animation_8r038"]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("black_screen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("black_screen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0588235), Color(1, 1, 1, 0.231373), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0588235), Color(1, 1, 1, 0.231373), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GPUParticles2D2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_856n2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("black_screen:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u2wxd"]
+_data = {
+"FadeIn": SubResource("Animation_8r038"),
+"RESET": SubResource("Animation_856n2")
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_n7ak5"]
+particle_flag_disable_z = true
+gravity = Vector3(298, 0, 0)
+damping_min = 22.396
+damping_max = 22.396
+turbulence_noise_strength = 5.64
+
+[sub_resource type="Gradient" id="Gradient_abc5t"]
+offsets = PackedFloat32Array(0.676136, 1)
+colors = PackedColorArray(0.121116, 0.0221894, 0, 1, 0.967943, 0.576138, 1.92523e-06, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mnv8g"]
+noise_type = 0
+frequency = 0.12
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gn41c"]
+width = 1412
+height = 852
+color_ramp = SubResource("Gradient_abc5t")
+noise = SubResource("FastNoiseLite_mnv8g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_eatrt"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+damping_min = 22.396
+damping_max = 22.396
+turbulence_noise_strength = 5.64
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k3cwg"]
+width = 1412
+height = 25
+color_ramp = SubResource("Gradient_abc5t")
+noise = SubResource("FastNoiseLite_mnv8g")
 
 [sub_resource type="GDScript" id="GDScript_wo8td"]
 script/source = "extends Resource
@@ -67,6 +198,132 @@ func get_label_array():
 script = SubResource("GDScript_wo8td")
 label_array = ["CANCEL", "DIRT", "FLOWERS", "GRASS", "ROCKY", "TILLED"]
 
+[sub_resource type="Animation" id="Animation_avvc4"]
+resource_name = "FadeIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("black_screen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("black_screen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0588235), Color(1, 1, 1, 0.231373), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("GPUParticles2D:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.6, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.0588235), Color(1, 1, 1, 0.231373), Color(1, 1, 1, 0)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("GPUParticles2D2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.966667, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_q1y2a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("black_screen:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GPUParticles2D:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.286275)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("GPUParticles2D2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.188235)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_am4oh"]
+_data = {
+"FadeIn": SubResource("Animation_avvc4"),
+"RESET": SubResource("Animation_q1y2a")
+}
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pgiuj"]
+width = 1412
+height = 917
+color_ramp = SubResource("Gradient_abc5t")
+noise = SubResource("FastNoiseLite_mnv8g")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wnl2t"]
 shader = ExtResource("5_tk4qq")
 
@@ -107,14 +364,14 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Inner Surface" type="VBoxContainer" parent="VBoxContainer/Screen"]
+[node name="2D Viewspace" type="VBoxContainer" parent="VBoxContainer/Screen"]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="VBoxContainer/Screen/Inner Surface"]
+[node name="Spacer" type="Control" parent="VBoxContainer/Screen/2D Viewspace"]
 custom_minimum_size = Vector2(0, 6)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Inner Surface/Spacer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/2D Viewspace/Spacer"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -122,33 +379,33 @@ offset_bottom = 37.0
 grow_horizontal = 2
 alignment = 2
 
-[node name="PlayerNameLabel" type="Label" parent="VBoxContainer/Screen/Inner Surface/Spacer/HBoxContainer"]
+[node name="PlayerNameLabel" type="Label" parent="VBoxContainer/Screen/2D Viewspace/Spacer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme = ExtResource("5_ey4y7")
 text = "Player Name"
 horizontal_alignment = 2
 
-[node name="soacer" type="Control" parent="VBoxContainer/Screen/Inner Surface/Spacer/HBoxContainer"]
+[node name="spacer" type="Control" parent="VBoxContainer/Screen/2D Viewspace/Spacer/HBoxContainer"]
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 
-[node name="YIndicator and Map" type="HBoxContainer" parent="VBoxContainer/Screen/Inner Surface"]
+[node name="YIndicator and Map" type="HBoxContainer" parent="VBoxContainer/Screen/2D Viewspace"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Spacer" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map"]
+[node name="Spacer" type="Control" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map"]
 custom_minimum_size = Vector2(2, 0)
 layout_mode = 2
 
-[node name="Y Indicator and spacer" type="VBoxContainer" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map"]
+[node name="Y Indicator and spacer" type="VBoxContainer" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map"]
 layout_mode = 2
 
-[node name="Spacer" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/Y Indicator and spacer"]
+[node name="Spacer" type="Control" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/Y Indicator and spacer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
-[node name="PlayerMapHeightIndicator" type="VSlider" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/Y Indicator and spacer"]
+[node name="PlayerMapHeightIndicator" type="VSlider" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/Y Indicator and spacer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
@@ -157,14 +414,16 @@ theme = ExtResource("5_ey4y7")
 value = 100.0
 scrollable = false
 
-[node name="2D Camera Container" type="TabContainer" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map"]
+[node name="2D Camera Container" type="TabContainer" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource("5_ey4y7")
-current_tab = 0
+current_tab = 1
 
-[node name="Surface" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
+[node name="Surface" type="Control" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container"]
+unique_name_in_owner = true
+visible = false
 z_index = 3
 clip_contents = true
 custom_minimum_size = Vector2(700, 0)
@@ -174,7 +433,7 @@ size_flags_vertical = 3
 theme = ExtResource("5_ey4y7")
 metadata/_tab_index = 0
 
-[node name="SurfaceViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface"]
+[node name="SurfaceViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 15
@@ -186,64 +445,157 @@ grow_vertical = 2
 focus_mode = 0
 stretch = true
 
-[node name="SurfaceViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer"]
+[node name="SurfaceViewport" type="SubViewport" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer"]
 handle_input_locally = false
-size = Vector2i(700, 905)
+size = Vector2i(700, 2)
 size_2d_override = Vector2i(700, 920)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
-[node name="DonutInteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport" instance=ExtResource("3_1sr3o")]
+[node name="DonutInteriorMap" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport" instance=ExtResource("3_1sr3o")]
 unique_name_in_owner = true
 
-[node name="NinePatchRect" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface" instance=ExtResource("6_v25pf")]
+[node name="StartUpFadeIn" type="Control" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InteriorAnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/StartUpFadeIn"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_u2wxd")
+}
+
+[node name="black_screen" type="ColorRect" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/StartUpFadeIn"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.0
+offset_right = 60.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/StartUpFadeIn"]
+modulate = Color(1, 1, 1, 0.221787)
+position = Vector2(0, 438)
+scale = Vector2(7, 9.16)
+process_material = SubResource("ParticleProcessMaterial_n7ak5")
+texture = SubResource("NoiseTexture2D_gn41c")
+randomness = 0.3
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/StartUpFadeIn"]
+modulate = Color(1, 1, 1, 0.221787)
+position = Vector2(3, 863)
+scale = Vector2(7, 9.16)
+process_material = SubResource("ParticleProcessMaterial_eatrt")
+texture = SubResource("NoiseTexture2D_k3cwg")
+randomness = 0.3
+
+[node name="NinePatchRect" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface" instance=ExtResource("6_v25pf")]
 z_index = 3
 layout_mode = 1
 offset_top = 6.0
 
-[node name="Exterior" type="Control" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container"]
-visible = false
+[node name="Exterior" type="Control" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container"]
+unique_name_in_owner = true
 clip_contents = true
 custom_minimum_size = Vector2(700, 0)
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior"]
 layout_mode = 1
 anchors_preset = -1
+anchor_top = 0.00765027
 anchor_right = 1.0
-anchor_bottom = 1.026
-offset_bottom = 0.209961
+anchor_bottom = 1.01311
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(700, 920)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
-[node name="DonutExteriorMap" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
+[node name="DonutExteriorMap" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport" instance=ExtResource("7_anjr5")]
 unique_name_in_owner = true
 ring_world = ExtResource("2_3n4wt")
 popup_options_labels = SubResource("Resource_seomr")
 
-[node name="NinePatchRect" parent="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior" instance=ExtResource("6_v25pf")]
+[node name="StartUpFadeIn" type="Control" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 6.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ExteriorAnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/StartUpFadeIn"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_am4oh")
+}
+
+[node name="black_screen" type="ColorRect" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/StartUpFadeIn"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/StartUpFadeIn"]
+modulate = Color(1, 1, 1, 0.286275)
+position = Vector2(0, 412)
+scale = Vector2(7, 9.16)
+process_material = SubResource("ParticleProcessMaterial_n7ak5")
+texture = SubResource("NoiseTexture2D_pgiuj")
+randomness = 0.3
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/StartUpFadeIn"]
+modulate = Color(1, 1, 1, 0.188235)
+position = Vector2(3, 863)
+scale = Vector2(7, 9.16)
+process_material = SubResource("ParticleProcessMaterial_eatrt")
+texture = SubResource("NoiseTexture2D_k3cwg")
+randomness = 0.3
+
+[node name="NinePatchRect" parent="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior" instance=ExtResource("6_v25pf")]
 z_index = 3
 layout_mode = 1
+offset_top = 6.0
 
-[node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="VBoxContainer/Screen/Inner Surface"]
+[node name="SmallSpacer and XIndicator" type="HBoxContainer" parent="VBoxContainer/Screen/2D Viewspace"]
 layout_mode = 2
 
-[node name="spacer" type="Control" parent="VBoxContainer/Screen/Inner Surface/SmallSpacer and XIndicator"]
+[node name="spacer" type="Control" parent="VBoxContainer/Screen/2D Viewspace/SmallSpacer and XIndicator"]
 custom_minimum_size = Vector2(25, 0)
 layout_mode = 2
 
-[node name="PlayerMapWidthIndicator" type="HSlider" parent="VBoxContainer/Screen/Inner Surface/SmallSpacer and XIndicator"]
+[node name="PlayerMapWidthIndicator" type="HSlider" parent="VBoxContainer/Screen/2D Viewspace/SmallSpacer and XIndicator"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("5_ey4y7")
 
-[node name="spacer" type="Control" parent="VBoxContainer/Screen/Inner Surface"]
+[node name="spacer" type="Control" parent="VBoxContainer/Screen/2D Viewspace"]
 custom_minimum_size = Vector2(0, 2)
 layout_mode = 2
 
@@ -525,7 +877,7 @@ editable = false
 custom_minimum_size = Vector2(0, 580)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats"]
+[node name="HarvestStatsContainer" type="VBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -533,7 +885,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelHarvestStats" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="LabelHarvestStats" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
@@ -543,11 +895,11 @@ theme = ExtResource("5_ey4y7")
 theme_override_font_sizes/normal_font_size = 32
 text = "Harvest Stats"
 
-[node name="CabbageNapa" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
+[node name="CabbageNapa" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/CabbageNapa"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -555,514 +907,275 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="LabelCropCabbageNapa" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa/HBoxContainer"]
+[node name="LabelCropCabbageNapa" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/CabbageNapa/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Napa Cabbage : "
+
+[node name="TValueCropCabbageNapa" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/CabbageNapa/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="Cucumbers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Cucumbers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropCucumbers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Cucumbers/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Cucumbers : "
+
+[node name="TValueCropCucumbers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Cucumbers/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="Onions" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Onions"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropOnions" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Onions/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Onions : "
+
+[node name="TValueCropOnions" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Onions/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="Peppers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Peppers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropPeppers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Peppers/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Peppers : "
+
+[node name="TValueCropPeppers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Peppers/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="Potatoes" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Potatoes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropPotatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Potatoes/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Potatoes :
+"
+
+[node name="TValueCropPotatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Potatoes/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="SunFlowers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/SunFlowers"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropSunFlowers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/SunFlowers/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "SunFlowers : "
+
+[node name="TValueCropSunFlowers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/SunFlowers/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="Tomatoes" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Tomatoes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropTomatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Tomatoes/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Tomatoes : "
+
+[node name="TValueCropTomatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/Tomatoes/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="WheatApogey" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/WheatApogey"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropWheatApogey" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/WheatApogey/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(260, 30)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "Wheat - Apogey : "
+
+[node name="TValueCropWheatApogey" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/WheatApogey/HBoxContainer"]
+z_index = 2
+custom_minimum_size = Vector2(0, 30)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_ey4y7")
+theme_override_font_sizes/normal_font_size = 20
+text = "count"
+text_direction = 2
+
+[node name="TotalHarvest" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/TotalHarvest"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LabelCropCabbageGreen" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/TotalHarvest/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(260, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 theme = ExtResource("5_ey4y7")
-text = "Cabbage - Napa : "
+text = "Harvest total:"
 
-[node name="TValueCropCabbageNapa" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageNapa/HBoxContainer"]
+[node name="TValueCropCabbageGreen" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/HarvestStatsContainer/TotalHarvest/HBoxContainer"]
 z_index = 2
 custom_minimum_size = Vector2(0, 40)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="CabbageGreen" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropCabbageGreen" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Cabbage - Green : "
-
-[node name="TValueCropCabbageGreen" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageGreen/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="CabbageRed" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropCabbageRed" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Cabbage - Red : "
-
-[node name="TValueCropCabbageRed" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageRed/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="CabbageSavoy" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropCabbageSavoy" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Cabbage - Savoy : "
-
-[node name="TValueCropCabbageSavoy" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/CabbageSavoy/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="Cucumbers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropCucumbers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Cucumbers : "
-
-[node name="TValueCropCucumbers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Cucumbers/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="GarlicElephant" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropGarlicElephant" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Garlic - Elephant :"
-
-[node name="TValueCropGarlicElephant" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/GarlicElephant/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="Lettuce" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropLettuce" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Lettuce : "
-
-[node name="TValueCropLettuce" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Lettuce/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="MustardMizuna" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropMustardMizuna" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Mustard - Mizuna : "
-
-[node name="TValueCropMustardMizuna" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardMizuna/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="MustardPizzo" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropMustardPizzo" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Mustard - Pizzo : "
-
-[node name="TValueCropMustardPizzo" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/MustardPizzo/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="Onions" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropOnions" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Onions : "
-
-[node name="TValueCropOnions" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Onions/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="Peppers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropPeppers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Peppers : "
-
-[node name="TValueCropPeppers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Peppers/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="Potatoes" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropPotatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Potatoes :
-"
-
-[node name="TValueCropPotatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Potatoes/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="SunFlowers" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropSunFlowers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "SunFlowers : "
-
-[node name="TValueCropSunFlowers" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/SunFlowers/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="Tomatoes" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropTomatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Tomatoes : "
-
-[node name="TValueCropTomatoes" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/Tomatoes/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="WheatApogey" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropWheatApogey" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Wheat - Apogey : "
-
-[node name="TValueCropWheatApogey" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatApogey/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
-layout_direction = 2
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "count"
-text_direction = 2
-
-[node name="WheatSuperDwarf" type="Control" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer"]
-visible = false
-custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="LabelCropWheatSuperDwarf" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(260, 30)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 0
-theme = ExtResource("5_ey4y7")
-text = "Wheat - Super Dwarf :"
-
-[node name="TValueCropWheatSuperDwarf" type="RichTextLabel" parent="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/HarvestStats/VBoxContainer/WheatSuperDwarf/HBoxContainer"]
-z_index = 2
-custom_minimum_size = Vector2(0, 30)
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
@@ -1150,6 +1263,52 @@ position = Vector2(-2, 6)
 points = PackedVector2Array(709, 564, 661, 544)
 width = 0.75
 
+[node name="StartUpFadeIn" type="Control" parent="VBoxContainer/Screen/OrbitDisplay/3D"]
+z_index = 1
+z_as_relative = false
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="3DAnimationPlayer" type="AnimationPlayer" parent="VBoxContainer/Screen/OrbitDisplay/3D/StartUpFadeIn"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_am4oh")
+}
+
+[node name="black_screen" type="ColorRect" parent="VBoxContainer/Screen/OrbitDisplay/3D/StartUpFadeIn"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 60.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="VBoxContainer/Screen/OrbitDisplay/3D/StartUpFadeIn"]
+modulate = Color(1, 1, 1, 0.286275)
+position = Vector2(374, 371)
+scale = Vector2(7, 9.16)
+process_material = SubResource("ParticleProcessMaterial_n7ak5")
+texture = SubResource("NoiseTexture2D_pgiuj")
+randomness = 0.3
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="VBoxContainer/Screen/OrbitDisplay/3D/StartUpFadeIn"]
+modulate = Color(1, 1, 1, 0.188235)
+position = Vector2(377, 822)
+scale = Vector2(7, 9.16)
+process_material = SubResource("ParticleProcessMaterial_eatrt")
+texture = SubResource("NoiseTexture2D_k3cwg")
+randomness = 0.3
+
 [node name="NinePatchRect" parent="VBoxContainer/Screen/OrbitDisplay/3D" instance=ExtResource("6_v25pf")]
 z_index = 3
 layout_mode = 1
@@ -1230,9 +1389,13 @@ offset_bottom = -10.0
 custom_minimum_size = Vector2(6, 0)
 layout_mode = 2
 
-[connection signal="update_player_position_donut_ui" from="." to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="_load_player_location"]
-[connection signal="update_player_position_donut_ui" from="." to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="_load_player_location"]
-[connection signal="current_camera_zoom" from="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
-[connection signal="current_camera_zoom" from="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
-[connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="_update_player_camera_zoom"]
-[connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/Inner Surface/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="_update_player_camera_zoom"]
+[connection signal="donut_exterior_load_player_interface_map" from="." to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="load_external_donut_player_interface_map"]
+[connection signal="donut_exterior_load_reference_map" from="." to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="load_external_donut_reference_map"]
+[connection signal="donut_interior_load_player_interface_map" from="." to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="load_internal_donut_player_interface_map"]
+[connection signal="donut_interior_load_reference_map" from="." to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="load_internal_donut_reference_map"]
+[connection signal="update_player_position_donut_ui" from="." to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="_load_player_location"]
+[connection signal="update_player_position_donut_ui" from="." to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="_load_player_location"]
+[connection signal="current_camera_zoom" from="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
+[connection signal="current_camera_zoom" from="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" to="." method="update_zoom_slider_to_match_player_zoom"]
+[connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Surface/SurfaceViewportContainer/SurfaceViewport/DonutInteriorMap" method="_update_player_camera_zoom"]
+[connection signal="value_changed" from="VBoxContainer/Screen/Stats Interface/VBoxContainer/MarginContainer/VBoxContainer/2DCameraInterface/VBoxContainer/2DCameraZoom/HBoxContainer/PlayerZoomSlider" to="VBoxContainer/Screen/2D Viewspace/YIndicator and Map/2D Camera Container/Exterior/SubViewportContainer/SubViewport/DonutExteriorMap" method="_update_player_camera_zoom"]
